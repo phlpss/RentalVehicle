@@ -1,0 +1,159 @@
+.car-search-results {
+  padding: 20px 0;
+}
+
+.car-search-results h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.car-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.car-card-header {
+  padding: 16px;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.car-card-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #2c3e50;
+}
+
+.car-year {
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.car-card-image {
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f1f3f5;
+}
+
+.car-image-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.car-image-placeholder span {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #6c757d;
+}
+
+.car-card-details {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.car-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.detail-value {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.car-card-footer {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+.car-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-amount {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.price-period {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.book-button {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.book-button:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+.book-button:disabled {
+  background-color: #ced4da;
+  cursor: not-allowed;
+}
+
+.loading-results, .no-results {
+  text-align: center;
+  padding: 40px 0;
+  color: #6c757d;
+}
+
+.no-results h3 {
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+} 
