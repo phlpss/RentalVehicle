@@ -1,6 +1,7 @@
 package db.com.rentalvehicle.controller;
 
 import db.com.rentalvehicle.dto.AvailabilityResponse;
+import db.com.rentalvehicle.dto.AvailableDatesResponse;
 import db.com.rentalvehicle.dto.CarSearchParameters;
 import db.com.rentalvehicle.dto.CarSearchResult;
 import db.com.rentalvehicle.dto.CarSearchSelectors;
@@ -25,6 +26,18 @@ public class CarController {
   private final CarService carService;
 
   @Operation(
+      summary = "Get car details by ID",
+      description = "Retrieves the details of a specific car by its ID"
+  )
+  @GetMapping("/{carId}")
+  public ResponseEntity<CarSearchResult> getCarDetails(
+      @Parameter(description = "ID of the car to retrieve") @PathVariable String carId
+  ) {
+    CarSearchResult carDetails = carService.getCarDetails(carId);
+    return ResponseEntity.ok(carDetails);
+  }
+
+  @Operation(
       summary = "Check car availability",
       description = "Checks if a car is available for the specified time period"
   )
@@ -38,6 +51,18 @@ public class CarController {
   ) {
     boolean available = carService.isAvailable(carId, start, end);
     return ResponseEntity.ok(new AvailabilityResponse(carId, available));
+  }
+
+  @Operation(
+      summary = "Get available booking dates",
+      description = "Returns a list of available dates for booking the specified car"
+  )
+  @GetMapping("/{carId}/available-dates")
+  public ResponseEntity<AvailableDatesResponse> getAvailableDates(
+      @Parameter(description = "ID of the car to check") @PathVariable String carId
+  ) {
+    AvailableDatesResponse response = carService.getAvailableDates(carId);
+    return ResponseEntity.ok(response);
   }
 
   @Operation(

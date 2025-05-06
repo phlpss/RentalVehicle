@@ -1,4 +1,4 @@
--- Enums
+-- Enums (keeping only the ones we still need)
 CREATE TYPE worker_position AS ENUM ('MANAGER', 'ASSISTANT');
 CREATE TYPE purchase_status AS ENUM ('PENDING', 'COMPLETED', 'CANCELLED');
 CREATE TYPE payment_type AS ENUM ('CASH', 'APPLE_PAY', 'GOOGLE_PAY', 'IBAN');
@@ -61,7 +61,7 @@ CREATE TABLE payment (
     payment_type payment_type
 );
 
--- Rental table
+-- Rental table (using VARCHAR with CHECK constraint instead of enum)
 CREATE TABLE rental (
     id VARCHAR(36) PRIMARY KEY,
     rental_date TIMESTAMP,
@@ -118,7 +118,7 @@ CREATE TABLE delivery (
     FOREIGN KEY (office_id) REFERENCES office(id)
 );
 
--- Return Inspection table
+-- Return Inspection table (using VARCHAR with CHECK constraint instead of enum)
 CREATE TABLE return_inspection (
     id VARCHAR(36) PRIMARY KEY,
     inspection_date TIMESTAMP,
@@ -141,4 +141,4 @@ CREATE TABLE damage_report (
     estimated_repair_cost DOUBLE PRECISION,
     inspection_id VARCHAR(36),
     FOREIGN KEY (inspection_id) REFERENCES return_inspection(id)
-);
+); 

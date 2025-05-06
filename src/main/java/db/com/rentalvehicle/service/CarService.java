@@ -1,29 +1,112 @@
 package db.com.rentalvehicle.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import db.com.rentalvehicle.dto.AvailableDatesResponse;
 import db.com.rentalvehicle.dto.CarSearchParameters;
 import db.com.rentalvehicle.dto.CarSearchResult;
 import db.com.rentalvehicle.dto.CarSearchSelectors;
 import db.com.rentalvehicle.model.Car;
+import db.com.rentalvehicle.model.Rental;
 import db.com.rentalvehicle.repository.CarRepository;
+import db.com.rentalvehicle.repository.RentalRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
 public class CarService {
     private final CarRepository carRepository;
+    private final RentalRepository rentalRepository;
+    
+    // Number of days to look ahead for availability
+    private static final int DAYS_AHEAD = 90;
 
-    public boolean isAvailable(String carId, LocalDateTime start, LocalDateTime end) {
-        // Implementation needed
-        return false;
+    public CarSearchResult getCarDetails(String carId) {
+        Car car = carRepository.findById(carId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
+        
+        return mapToSearchResult(car);
     }
 
-    void updateStatus(String carId, String status) {
-        // Implementation needed
+    public boolean isAvailable(String carId, LocalDateTime start, LocalDateTime end) {
+        // Check if car exists
+        Optional<Car> carOpt = carRepository.findById(carId);
+        if (carOpt.isEmpty()) {
+            return false;
+        }
+        
+        // Check if car is in available status
+        Car car = carOpt.get();
+        if (!"AVAILABLE".equals(car.getStatus())) {
+            return false;
+        }
+        
+        // Check if there are any overlapping rentals
+        List<Rental> overlappingRentals = rentalRepository.findOverlappingRentals(carId, start, end);
+        return overlappingRentals.isEmpty();
+    }
+    
+    public AvailableDatesResponse getAvailableDates(String carId) {
+        // Check if car exists
+        Optional<Car> carOpt = carRepository.findById(carId);
+        if (carOpt.isEmpty()) {
+            return new AvailableDatesResponse(carId, List.of(), null, null);
+        }
+        
+        // Check if car is in available status
+        Car car = carOpt.get();
+        if (!"AVAILABLE".equals(car.getStatus())) {
+            return new AvailableDatesResponse(carId, List.of(), null, null);
+        }
+        
+        // Get current date and the date 90 days from now
+        LocalDate today = LocalDate.now();
+        LocalDate endDate = today.plusDays(DAYS_AHEAD);
+        
+        // Get all rentals for this car
+        List<Rental> carRentals = rentalRepository.findByCarId(carId);
+        
+        // Generate all dates between today and endDate
+        List<LocalDate> allDates = IntStream.rangeClosed(0, DAYS_AHEAD)
+                .mapToObj(today::plusDays)
+                .collect(Collectors.toList());
+        
+        // Filter out dates that are not available
+        List<LocalDate> availableDates = new ArrayList<>(allDates);
+        
+        for (Rental rental : carRentals) {
+            LocalDate rentalStartDate = rental.getRentalStart().toLocalDate();
+            LocalDate rentalEndDate = rental.getRentalEnd().toLocalDate();
+            
+            // Remove dates that are covered by existing rentals
+            availableDates.removeIf(date -> 
+                    !date.isBefore(rentalStartDate) && !date.isAfter(rentalEndDate));
+        }
+        
+        // Get earliest and latest available dates
+        LocalDate earliestAvailable = availableDates.isEmpty() ? null : availableDates.get(0);
+        LocalDate latestAvailable = availableDates.isEmpty() ? null : availableDates.get(availableDates.size() - 1);
+        
+        return new AvailableDatesResponse(carId, availableDates, earliestAvailable, latestAvailable);
+    }
+
+    public void updateStatus(String carId, String status) {
+        Optional<Car> carOpt = carRepository.findById(carId);
+        if (carOpt.isPresent()) {
+            Car car = carOpt.get();
+            car.setStatus(status);
+            carRepository.save(car);
+        }
     }
 
     public CarSearchSelectors getSearchSelectors() {

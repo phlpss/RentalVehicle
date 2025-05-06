@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -42,5 +43,6 @@ public class Client {
   private String driverLicenseNumber;
 
   @OneToMany(mappedBy = "client")
+  @ToString.Exclude
   private List<Rental> rentals;
 }

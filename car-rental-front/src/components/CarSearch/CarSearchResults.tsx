@@ -1,13 +1,34 @@
+import { useState } from 'react';
 import type { CarSearchResult } from '../../types/CarTypes';
+import BookingModal from '../Booking/BookingModal';
 import './CarSearchResults.css';
 
 interface CarSearchResultsProps {
   results: CarSearchResult[];
   loading: boolean;
-  onBookCar: (carId: string) => void;
 }
 
-const CarSearchResults = ({ results, loading, onBookCar }: CarSearchResultsProps) => {
+const CarSearchResults = ({ results, loading }: CarSearchResultsProps) => {
+  const [selectedCarId, setSelectedCarId] = useState<string | null>(null);
+  const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
+
+  const handleBookCar = (carId: string) => {
+    setSelectedCarId(carId);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedCarId(null);
+  };
+
+  const handleBookingSuccess = (bookingId: string) => {
+    setSelectedCarId(null);
+    setBookingSuccess(bookingId);
+    // In a real app, you might navigate to a booking details page or show a more detailed success message
+    setTimeout(() => {
+      setBookingSuccess(null);
+    }, 5000); // Clear the success message after 5 seconds
+  };
+
   if (loading) {
     return <div className="loading-results">Searching for cars...</div>;
   }
@@ -23,6 +44,12 @@ const CarSearchResults = ({ results, loading, onBookCar }: CarSearchResultsProps
 
   return (
     <div className="car-search-results">
+      {bookingSuccess && (
+        <div className="booking-success-banner">
+          <p>Booking successful! Your booking ID is: <strong>{bookingSuccess}</strong></p>
+        </div>
+      )}
+      
       <h2>Available Cars ({results.length})</h2>
       <div className="results-grid">
         {results.map(car => (
@@ -70,7 +97,7 @@ const CarSearchResults = ({ results, loading, onBookCar }: CarSearchResultsProps
               </div>
               <button 
                 className="book-button"
-                onClick={() => onBookCar(car.id)}
+                onClick={() => handleBookCar(car.id)}
                 disabled={car.status !== 'AVAILABLE'}
               >
                 {car.status === 'AVAILABLE' ? 'Book Now' : 'Unavailable'}
@@ -79,6 +106,14 @@ const CarSearchResults = ({ results, loading, onBookCar }: CarSearchResultsProps
           </div>
         ))}
       </div>
+      
+      {selectedCarId && (
+        <BookingModal 
+          carId={selectedCarId} 
+          onClose={handleCloseModal}
+          onBookingSuccess={handleBookingSuccess}
+        />
+      )}
     </div>
   );
 };
