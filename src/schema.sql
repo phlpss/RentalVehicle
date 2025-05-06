@@ -1,6 +1,5 @@
-
 -- Enums
-CREATE TYPE position AS ENUM ('MANAGER', 'ASSISTANT');
+CREATE TYPE worker_position AS ENUM ('MANAGER', 'ASSISTANT');
 CREATE TYPE rental_status AS ENUM ('ACTIVE', 'INACTIVE', 'RESERVED');
 CREATE TYPE inspection_status AS ENUM ('OK', 'NEEDS_REPAIR', 'FINED');
 CREATE TYPE purchase_status AS ENUM ('PENDING', 'COMPLETED', 'CANCELLED');
@@ -21,7 +20,7 @@ CREATE TABLE worker (
     contact_number VARCHAR(255) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE,
     address VARCHAR(255),
-    position position
+    position worker_position
 );
 
 -- Client table

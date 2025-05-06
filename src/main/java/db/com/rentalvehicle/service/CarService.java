@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class CarService {
     private final CarRepository carRepository;
 
-    boolean isAvailable(String carId, LocalDateTime start, LocalDateTime end) {
+    public boolean isAvailable(String carId, LocalDateTime start, LocalDateTime end) {
         // Implementation needed
         return false;
     }
