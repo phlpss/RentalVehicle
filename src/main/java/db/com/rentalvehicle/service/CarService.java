@@ -9,12 +9,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import db.com.rentalvehicle.dto.AvailableDatesResponse;
+import db.com.rentalvehicle.dto.CarCreateDTO;
 import db.com.rentalvehicle.dto.CarSearchParameters;
 import db.com.rentalvehicle.dto.CarSearchResult;
 import db.com.rentalvehicle.dto.CarSearchSelectors;
 import db.com.rentalvehicle.model.Car;
+import db.com.rentalvehicle.model.Office;
 import db.com.rentalvehicle.model.Rental;
 import db.com.rentalvehicle.repository.CarRepository;
+import db.com.rentalvehicle.repository.OfficeRepository;
 import db.com.rentalvehicle.repository.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class CarService {
     private final CarRepository carRepository;
     private final RentalRepository rentalRepository;
+    private final OfficeRepository officeRepository;
     
     // Number of days to look ahead for availability
     private static final int DAYS_AHEAD = 90;
@@ -154,9 +158,9 @@ public class CarService {
         return selectors;
     }
 
-    public List<CarSearchResult> searchCars(CarSearchParameters parameters) {
+    public List<CarSearchResult> searchCars(CarSearchParameters searchParameters) {
         return carRepository.findAll().stream()
-                .filter(car -> matchesSearchParameters(car, parameters))
+                .filter(car -> matchesSearchParameters(car, searchParameters))
                 .map(this::mapToSearchResult)
                 .collect(Collectors.toList());
     }
@@ -201,5 +205,51 @@ public class CarService {
         result.setDailyRentalCost(car.getDailyRentalCost());
         result.setOfficeId(car.getOffice() != null ? car.getOffice().getId() : null);
         return result;
+    }
+
+    // Admin functionality
+    
+    public List<Car> getAllCars() {
+        return carRepository.findAll();
+    }
+    
+    public List<Car> getCarsByOffice(String officeId) {
+        return carRepository.findByOffice_Id(officeId);
+    }
+    
+    public Car addCar(Car car) {
+        // Generate a new UUID if not provided
+        if (car.getId() == null || car.getId().isEmpty()) {
+            car.setId(java.util.UUID.randomUUID().toString());
+        }
+        
+        return carRepository.save(car);
+    }
+    
+    public Car addCar(CarCreateDTO carCreateDTO) {
+        Car car = new Car();
+        car.setId(java.util.UUID.randomUUID().toString());
+        car.setVin(carCreateDTO.getVin());
+        car.setLicensePlateNum(carCreateDTO.getLicensePlateNum());
+        car.setBrand(carCreateDTO.getBrand());
+        car.setModel(carCreateDTO.getModel());
+        car.setYear(carCreateDTO.getYear());
+        car.setColor(carCreateDTO.getColor());
+        car.setStatus(carCreateDTO.getStatus());
+        car.setMileage(carCreateDTO.getMileage());
+        car.setFuelType(carCreateDTO.getFuelType());
+        car.setTransmissionType(carCreateDTO.getTransmissionType());
+        car.setCategory(carCreateDTO.getCategory());
+        car.setSeatsNumber(carCreateDTO.getSeatsNumber());
+        car.setDailyRentalCost(carCreateDTO.getDailyRentalCost());
+        
+        // Set office if provided
+        if (carCreateDTO.getOfficeId() != null && !carCreateDTO.getOfficeId().isEmpty()) {
+            Office office = officeRepository.findById(carCreateDTO.getOfficeId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Office not found"));
+            car.setOffice(office);
+        }
+        
+        return carRepository.save(car);
     }
 }

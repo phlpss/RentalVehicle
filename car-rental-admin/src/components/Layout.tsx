@@ -1,13 +1,15 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { User } from '../types';
+import UserSwitcher from './UserSwitcher';
 import './Layout.css';
 
 interface LayoutProps {
   user: User | null;
   onLogout: () => void;
+  onUserChange?: (user: User) => void;
 }
 
-const Layout = ({ user, onLogout }: LayoutProps) => {
+const Layout = ({ user, onLogout, onUserChange }: LayoutProps) => {
   const location = useLocation();
 
   return (
@@ -44,7 +46,7 @@ const Layout = ({ user, onLogout }: LayoutProps) => {
           </ul>
         </nav>
         <div className="user-menu">
-          <span className="username">{user?.username}</span>
+          {user && onUserChange && <UserSwitcher currentUser={user} onUserChange={onUserChange} />}
           <button className="logout-button" onClick={onLogout}>Logout</button>
         </div>
       </header>

@@ -1,5 +1,6 @@
 import {WorkerDashboardResponse} from "../types/WorkerTypes.ts";
 import {InspectionDetailsResponse, ReturnInspectionRequest, ReturnInspectionResponse, CompletedInspection} from "../types/InspectionTypes.ts";
+import { Car } from "../types";
 
 // Make sure this matches your backend URL exactly
 const API_URL = 'http://localhost:8080';
@@ -98,5 +99,65 @@ export const getCompletedInspections = async (workerId: string): Promise<Complet
     console.error('Error fetching completed inspections:', error);
     // Return empty array as fallback
     return [];
+  }
+};
+
+// Admin functions
+
+// Get All Offices
+export const getOffices = async (): Promise<{ id: string, city: string, address: string }[]> => {
+  try {
+    const response = await fetch(`${API_URL}/api/offices`);
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch offices');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching offices:', error);
+    return [];
+  }
+};
+
+// Get Cars By Office
+export const getCarsByOffice = async (officeId?: string): Promise<Car[]> => {
+  try {
+    const url = officeId 
+      ? `${API_URL}/api/cars/office/${officeId}` 
+      : `${API_URL}/api/cars`;
+      
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch cars');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching cars:', error);
+    return [];
+  }
+};
+
+// Add New Car
+export const addCar = async (car: Omit<Car, 'id'>): Promise<Car> => {
+  try {
+    const response = await fetch(`${API_URL}/api/cars`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(car),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to add new car');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error adding new car:', error);
+    throw error;
   }
 }; 
