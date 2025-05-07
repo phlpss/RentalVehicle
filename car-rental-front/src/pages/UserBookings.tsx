@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getUserBookings, pickupBooking, returnBooking } from '../services/api';
 import type { UserBooking, DamageReport } from '../types/BookingTypes';
 import { useClientUser } from '../App';
+import { getCarImageUrl, getBrandLogoUrl } from '../utils/carImageMapper';
 import './UserBookings.css';
 
 const UserBookings = () => {
@@ -10,6 +11,7 @@ const UserBookings = () => {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [expandedBooking, setExpandedBooking] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<Record<string, boolean>>({});
 
   // Get user from context instead of hardcoding
   const { user } = useClientUser();
@@ -83,6 +85,13 @@ const UserBookings = () => {
     }
   };
 
+  const handleImageError = (bookingId: string) => {
+    setImageError(prev => ({
+      ...prev,
+      [bookingId]: true
+    }));
+  };
+
   if (loading) {
     return (
       <div className="user-bookings-container">
@@ -126,38 +135,59 @@ const UserBookings = () => {
               
               <div className={`booking-content ${expandedBooking === booking.id ? 'expanded' : ''}`}>
                 <div className="booking-details">
-                  <div className="detail-row">
-                    <span>Pickup/Return Location:</span>
-                    <span>{booking.location || 'Unknown location'}</span>
+                  <div className="booking-image">
+                    {imageError[booking.id] ? (
+                      <div className="booking-image-placeholder">
+                        <img 
+                          src={getBrandLogoUrl(booking.carBrand)} 
+                          alt={`${booking.carBrand} logo`} 
+                          className="brand-logo"
+                        />
+                      </div>
+                    ) : (
+                      <img 
+                        src={getCarImageUrl(booking.carBrand, booking.model, 'Sedan')} 
+                        alt={`${booking.carBrand} ${booking.model}`} 
+                        className="booking-car-image"
+                        onError={() => handleImageError(booking.id)}
+                      />
+                    )}
                   </div>
-                  
-                  {/* Show action buttons based on booking status */}
-                  <div className="booking-actions">
-                    {booking.status === 'RESERVED' && (
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handlePickup(booking.id);
-                        }}
-                        className="button pickup-button"
-                        disabled={actionLoading === booking.id}
-                      >
-                        {actionLoading === booking.id ? 'Processing...' : 'Confirm Pickup'}
-                      </button>
-                    )}
+
+                  <div className="booking-info">
+                    <div className="detail-row">
+                      <span>Pickup/Return Location:</span>
+                      <span>{booking.location || 'Unknown location'}</span>
+                    </div>
                     
-                    {booking.status === 'PICKED_UP' && (
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleReturn(booking.id);
-                        }}
-                        className="button return-button"
-                        disabled={actionLoading === booking.id}
-                      >
-                        {actionLoading === booking.id ? 'Processing...' : 'Return Vehicle'}
-                      </button>
-                    )}
+                    {/* Show action buttons based on booking status */}
+                    <div className="booking-actions">
+                      {booking.status === 'RESERVED' && (
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePickup(booking.id);
+                          }}
+                          className="button pickup-button"
+                          disabled={actionLoading === booking.id}
+                        >
+                          {actionLoading === booking.id ? 'Processing...' : 'Confirm Pickup'}
+                        </button>
+                      )}
+                      
+                      {booking.status === 'PICKED_UP' && (
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleReturn(booking.id);
+                          }}
+                          className="button return-button"
+                          disabled={actionLoading === booking.id}
+                        >
+                          {actionLoading === booking.id ? 'Processing...' : 'Return Vehicle'}
+                        </button>
+                      )}
+                    </div>
                   </div>
                   
                   {/* Show inspection details if available */}

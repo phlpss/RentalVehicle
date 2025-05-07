@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { CarSearchResult } from '../../types/CarTypes';
 import BookingModal from '../Booking/BookingModal';
+import { getCarImageUrl, getBrandLogoUrl } from '../../utils/carImageMapper';
 import './CarSearchResults.css';
 
 interface CarSearchResultsProps {
@@ -11,6 +12,7 @@ interface CarSearchResultsProps {
 const CarSearchResults = ({ results, loading }: CarSearchResultsProps) => {
   const [selectedCarId, setSelectedCarId] = useState<string | null>(null);
   const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<Record<string, boolean>>({});
 
   const handleBookCar = (carId: string) => {
     setSelectedCarId(carId);
@@ -27,6 +29,13 @@ const CarSearchResults = ({ results, loading }: CarSearchResultsProps) => {
     setTimeout(() => {
       setBookingSuccess(null);
     }, 5000); // Clear the success message after 5 seconds
+  };
+
+  const handleImageError = (carId: string) => {
+    setImageError(prev => ({
+      ...prev,
+      [carId]: true
+    }));
   };
 
   if (loading) {
@@ -59,10 +68,23 @@ const CarSearchResults = ({ results, loading }: CarSearchResultsProps) => {
               <span className="car-year">{car.year}</span>
             </div>
             <div className="car-card-image">
-              {/* Placeholder for car image */}
-              <div className="car-image-placeholder">
-                <span>{car.brand.charAt(0)}{car.model.charAt(0)}</span>
-              </div>
+              {imageError[car.id] ? (
+                <div className="car-image-placeholder">
+                  <img 
+                    src={getBrandLogoUrl(car.brand)} 
+                    alt={`${car.brand} logo`} 
+                    className="brand-logo"
+                    onError={() => handleImageError(`${car.id}-logo`)}
+                  />
+                </div>
+              ) : (
+                <img 
+                  src={getCarImageUrl(car.brand, car.model, car.category)} 
+                  alt={`${car.brand} ${car.model}`} 
+                  className="car-image"
+                  onError={() => handleImageError(car.id)}
+                />
+              )}
             </div>
             <div className="car-card-details">
               <div className="car-detail">
