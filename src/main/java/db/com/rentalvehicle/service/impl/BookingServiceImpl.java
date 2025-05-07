@@ -18,6 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,7 +113,11 @@ public class BookingServiceImpl implements BookingService {
             );
         }
 
+        int randomId = ThreadLocalRandom.current().nextInt(1, 3);
+        var worker = workerRepository.findById(String.valueOf(randomId)).orElseThrow();
+
         rental.setStatus(RentalStatus.RETURNED);
+        rental.setWorker(worker);
         rentalRepository.save(rental);
 
         // Car status remains RENTED until inspection
