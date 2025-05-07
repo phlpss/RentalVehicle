@@ -203,7 +203,406 @@ VALUES ('49beeb6a-2073-43ef-b4c7-5d833814d77a', '67BDC3F10F8141DCB', 'XYZ-1665',
         '7bb29c36-823f-43ea-9055-6d52047dff0d'),
        ('a220e4ad-934e-4203-a405-ff351db7ed25', '36F540DC6DDF4D8BB', 'MNO-5420', 'Blue',
         'AVAILABLE', '161715.4', 'ELECTRIC', 'AUTOMATIC', 'Ford', 'Focus', 2008, 'suv', 2, 180.23,
-        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757');
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757'),
+       ('fadf4bf8-08c9-48d0-befa-58dee5dedfaf', 'VDRHLFYCX8OHPLBRX', 'FUE-2603', 'Red', 'RENTED',
+        '170155.5', 'DIESEL', 'AUTOMATIC', 'Ford', 'Focus', 2011, 'truck', 5, 44.68,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('1b5098c3-23fd-41b8-840d-2353e00a746f', 'OKQZ31F58ICWECD9Z', 'DXA-1008', 'Green',
+        'MAINTENANCE', '161879.0', 'HYBRID', 'MANUAL', 'Honda', 'Civic', 2017, 'compact', 6, 66.52,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('834f1a8c-069a-47ee-9c3c-71237aa008c1', '0VM9QJ3L1B2CUP3FH', 'CET-4831', 'White',
+        'MAINTENANCE', '150931.9', 'DIESEL', 'AUTOMATIC', 'Honda', 'Civic', 2016, 'van', 3, 78.59,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('06ffa276-6ea0-4016-923d-b5b5637b6978', '70CHOAX3OP5QXEPXH', 'KIS-6316', 'White', 'RENTED',
+        '84146.8', 'GASOLINE', 'MANUAL', 'Hyundai', 'Elantra', 2010, 'van', 2, 137.82,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('f75ae6a9-c0a4-41b1-a3a7-4aa76e5db961', 'TUBL8UHX5A1ZKAZTN', 'BWI-7064', 'Green', 'RENTED',
+        '41498.8', 'DIESEL', 'MANUAL', 'Nissan', 'Rogue', 2015, 'van', 6, 57.11,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('81c6df1e-486d-4a7d-9799-47d35751a9a6', '0WMHFVOL03VCK82A4', 'RAN-7125', 'Silver',
+        'MAINTENANCE', '144375.9', 'ELECTRIC', 'AUTOMATIC', 'Ford', 'Focus', 2006, 'van', 8, 32.61,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('e978b42f-2e80-450c-b1fd-6695a92eac06', '1BAURE3UD8H3N0QCG', 'KDX-2654', 'Red',
+        'MAINTENANCE', '15988.7', 'ELECTRIC', 'AUTOMATIC', 'Chevrolet', 'Impala', 2005, 'economy',
+        7, 118.72, 'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('a15153af-c724-4d97-ad15-1f461a9994ab', 'YHBFEJCN8P1XDIE6I', 'CNG-4167', 'Green',
+        'MAINTENANCE', '38415.1', 'DIESEL', 'AUTOMATIC', 'Honda', 'Civic', 2020, 'truck', 7, 60.22,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('9daa7019-e1cf-4f36-ab38-aa569499949a', '67LFLG4ICA0YED2MB', 'UNZ-4037', 'Blue',
+        'MAINTENANCE', '24302.2', 'GASOLINE', 'AUTOMATIC', 'Ford', 'Focus', 2008, 'compact', 5,
+        183.3, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('424df473-8b8d-4d84-be33-ae4c645a3cf5', 'E9S99JM5506Y7W6QY', 'ALA-3264', 'Blue',
+        'AVAILABLE', '88881.2', 'HYBRID', 'AUTOMATIC', 'Kia', 'Sportage', 2005, 'suv', 5, 117.16,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('c67da197-3c39-431a-8b80-2c14e50941a2', 'T13AUEMUJIHB5JMBH', 'NYP-5414', 'Silver',
+        'MAINTENANCE', '133485.6', 'GASOLINE', 'MANUAL', 'Honda', 'Civic', 2020, 'truck', 3, 99.22,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('651e9e37-a19b-4e09-b64c-efbeb91e8ca0', 'JKRGFZXSR4HOLTDYW', 'WEJ-7363', 'Green',
+        'MAINTENANCE', '142329.2', 'GASOLINE', 'AUTOMATIC', 'Chevrolet', 'Impala', 2019, 'economy',
+        5, 141.94, 'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('2d73c558-5209-4129-a328-5a443eb1e074', 'DTLXJUWUHRZUELKLE', 'JVC-8740', 'Red', 'RENTED',
+        '94992.6', 'GASOLINE', 'MANUAL', 'Volkswagen', 'Golf', 2017, 'suv', 6, 110.44,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('31422611-cfff-4b4e-9537-ff55acb0e88e', 'QAFMNC46J7DNP6SY4', 'IYX-9779', 'White',
+        'AVAILABLE', '112290.6', 'DIESEL', 'AUTOMATIC', 'Ford', 'Focus', 2005, 'suv', 2, 76.89,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('aaadf79e-71b2-48a4-9faf-a603512d47c1', 'R77FQWAJKK36CX8ZF', 'OKM-8652', 'Silver',
+        'AVAILABLE', '104077.5', 'ELECTRIC', 'AUTOMATIC', 'Hyundai', 'Elantra', 2011, 'truck', 3,
+        45.92, '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('1abaa26d-3393-4b97-a032-3cf612209707', 'MORW5C103S19VDOPF', 'TEJ-5916', 'Silver',
+        'MAINTENANCE', '156888.6', 'ELECTRIC', 'AUTOMATIC', 'Hyundai', 'Elantra', 2015, 'compact',
+        7, 105.75, 'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('158cabde-5f40-44f0-ac48-88e8658c7b3a', '09BATW4MNPLA13O5S', 'HVK-6938', 'White',
+        'MAINTENANCE', '117506.8', 'GASOLINE', 'MANUAL', 'Hyundai', 'Elantra', 2006, 'van', 4,
+        32.64, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('77b2aaad-1d4b-4d6f-81dc-e1337d3fe7f1', 'OYWJ7K701B9YUGR9T', 'MQK-2508', 'Silver',
+        'MAINTENANCE', '20024.2', 'GASOLINE', 'AUTOMATIC', 'Hyundai', 'Elantra', 2012, 'truck', 7,
+        120.07, 'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('737f3524-5b37-4290-ac6a-2e08432100d4', '12RQS2WMFBGLQBDLZ', 'IVW-5245', 'Silver',
+        'MAINTENANCE', '75802.7', 'GASOLINE', 'MANUAL', 'Ford', 'Focus', 2008, 'van', 6, 185.51,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('b2457809-39b1-43ec-8226-9867597c8414', 'J4D7J98VKBURAL6DY', 'SVQ-8146', 'Red', 'RENTED',
+        '34847.7', 'ELECTRIC', 'MANUAL', 'Tesla', 'Model 3', 2010, 'economy', 8, 120.34,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('c0fa28af-5b1e-451a-b2ac-ec1a7496a3cd', '24PVI4L36TC5KT1X6', 'WJQ-7728', 'Black',
+        'AVAILABLE', '13074.9', 'GASOLINE', 'AUTOMATIC', 'Chevrolet', 'Impala', 2008, 'compact', 2,
+        147.16, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('7b7b34f2-817c-49e7-9467-7a510f061e89', 'DSRK81BQQ8NI1OIWG', 'KLB-6109', 'Green', 'RENTED',
+        '33918.6', 'DIESEL', 'AUTOMATIC', 'Toyota', 'Corolla', 2011, 'truck', 2, 143.73,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('799717bf-afd0-484c-b6d1-e4ed5099b16e', 'CNFU3HO7KMTUVHIEZ', 'LJH-1424', 'Silver', 'RENTED',
+        '45567.3', 'GASOLINE', 'MANUAL', 'BMW', 'X5', 2015, 'compact', 7, 125.92,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('aff3eb9e-bfe0-47e3-9b06-1ceb60c75168', 'MZP75HDOXFYI9Z6V3', 'HSH-3849', 'Silver',
+        'AVAILABLE', '197483.9', 'DIESEL', 'AUTOMATIC', 'Nissan', 'Rogue', 2009, 'truck', 4, 123.61,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('1aa80996-6933-44d2-86ef-d740aff67a65', 'M36FRDRU8BVJOR6T6', 'GEP-6742', 'Green', 'RENTED',
+        '171237.2', 'HYBRID', 'AUTOMATIC', 'Volkswagen', 'Golf', 2006, 'truck', 4, 192.91,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('514d9259-7f2c-4c57-866c-e69647616b55', '1AB15CV5QZZREW2MZ', 'MWP-5074', 'Silver',
+        'MAINTENANCE', '101153.3', 'ELECTRIC', 'MANUAL', 'Ford', 'Focus', 2017, 'truck', 4, 49.29,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('cab08872-d099-4cab-9521-890d6f3da61d', '66FEO9XAWJUG8TVZY', 'GNT-7154', 'Silver',
+        'MAINTENANCE', '131068.2', 'HYBRID', 'MANUAL', 'Volkswagen', 'Golf', 2015, 'economy', 3,
+        111.12, 'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('bc2cd9a0-572b-4164-a623-d2a9bad809f2', 'DBIVD62KQHTEJ7ZGA', 'UUC-2206', 'Blue',
+        'AVAILABLE', '118194.2', 'GASOLINE', 'AUTOMATIC', 'Tesla', 'Model 3', 2020, 'suv', 6,
+        128.82, 'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('0b8ad698-8d2b-4b2a-8cc3-d67a7e20fdf8', 'V2BOGYIH1WQU6XQFI', 'GZF-4446', 'Green',
+        'AVAILABLE', '142821.5', 'GASOLINE', 'MANUAL', 'Hyundai', 'Elantra', 2022, 'economy', 3,
+        198.08, 'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('32724f70-9b3b-4d63-a667-7ae5b52c3dd5', 'CVDQ17GFR17NZVNOK', 'BCV-5202', 'White',
+        'MAINTENANCE', '141173.4', 'HYBRID', 'AUTOMATIC', 'Honda', 'Civic', 2008, 'truck', 2,
+        168.72, 'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('0eb9b949-be80-44d6-90b5-95d8beb511ad', 'SK8I3MVDL994LCLZL', 'VGA-9543', 'Red',
+        'MAINTENANCE', '13179.7', 'ELECTRIC', 'MANUAL', 'Honda', 'Civic', 2019, 'suv', 4, 185.71,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('ce5c2f88-21a1-41b9-8315-13d14f497267', 'J4E0Q6FHJNYVHU1GE', 'VUO-4522', 'Silver',
+        'MAINTENANCE', '54139.9', 'GASOLINE', 'MANUAL', 'Toyota', 'Corolla', 2007, 'economy', 4,
+        73.61, 'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('e8978584-cb87-475f-8aa9-4f8f0a1cf72b', 'ICFXA161MJIMXUF3M', 'HMM-1249', 'White',
+        'MAINTENANCE', '135574.5', 'HYBRID', 'MANUAL', 'Kia', 'Sportage', 2006, 'economy', 2, 64.55,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('6f0fb89a-b28f-4d3f-9c91-d2d5dce30491', 'A8IFDJAVEJBMI9GKP', 'HXA-1528', 'Black', 'RENTED',
+        '77354.8', 'DIESEL', 'AUTOMATIC', 'Volkswagen', 'Golf', 2020, 'truck', 6, 178.12,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('46ae30af-dc12-45c8-931f-410d9db1fc8a', 'PMNYVV4DFPZFATG6Q', 'QEF-2423', 'Green', 'RENTED',
+        '65434.9', 'HYBRID', 'AUTOMATIC', 'Ford', 'Focus', 2022, 'compact', 8, 118.58,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('624d6911-33bc-49ac-968d-e58a246bb267', 'DTVQR9DQPVNY2A987', 'NOK-5197', 'Blue', 'RENTED',
+        '74311.6', 'HYBRID', 'AUTOMATIC', 'Chevrolet', 'Impala', 2020, 'compact', 7, 126.66,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('adec299e-94f9-4967-9d59-60d8c28dc71f', 'DOEE4MRZ2XX5ASZDS', 'MBI-7805', 'Blue', 'RENTED',
+        '115440.7', 'GASOLINE', 'MANUAL', 'Ford', 'Focus', 2010, 'truck', 4, 116.74,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('8b0ee4e0-fee6-4036-a6c5-b41cf61319f8', 'LSTS2Z44X8NDZELR5', 'QZE-7786', 'Black',
+        'MAINTENANCE', '140027.1', 'HYBRID', 'AUTOMATIC', 'Nissan', 'Rogue', 2016, 'economy', 4,
+        72.49, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('00425ce8-13a6-4e74-ad57-0a8bad7a62b2', 'XBLW74O7JBTH36ZAN', 'SMW-5512', 'Black',
+        'MAINTENANCE', '65542.4', 'HYBRID', 'AUTOMATIC', 'Ford', 'Focus', 2014, 'suv', 2, 97.74,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('e8f1affb-bf5c-4cdf-8908-4947529dd526', 'BWVQEWPSW2NV1PELV', 'THN-6178', 'Green', 'RENTED',
+        '128875.0', 'HYBRID', 'MANUAL', 'Hyundai', 'Elantra', 2021, 'truck', 6, 33.96,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('d87b7b47-f141-4597-be3b-7376fce96045', 'Q42MBHMCXXIVZV7B1', 'FLD-4587', 'Red', 'RENTED',
+        '75707.8', 'GASOLINE', 'AUTOMATIC', 'Chevrolet', 'Impala', 2012, 'van', 4, 198.89,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('8ffda148-3d2c-4c3f-8948-587921902a30', '692EAD39Z4DRHCVVR', 'VKT-7600', 'Black',
+        'MAINTENANCE', '37545.0', 'ELECTRIC', 'MANUAL', 'Chevrolet', 'Impala', 2011, 'compact', 5,
+        158.16, 'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('68dd72ac-c575-4634-b6e1-330b9e6f1441', 'H7UQTX9CSMAHJVXIY', 'ASI-9505', 'Black',
+        'AVAILABLE', '98588.8', 'DIESEL', 'AUTOMATIC', 'Nissan', 'Rogue', 2021, 'truck', 7, 144.27,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('b7b4f68b-16cd-4124-9be5-322dd32d1f1a', '9MQDZN1NNE4B8I82W', 'GZE-8034', 'Green', 'RENTED',
+        '144483.3', 'HYBRID', 'MANUAL', 'Tesla', 'Model 3', 2009, 'suv', 3, 131.1,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('7523d520-d42a-43af-b26c-a5d277608a15', 'MQZ6NEJ1X8QKYM6R5', 'RSQ-2057', 'Red', 'AVAILABLE',
+        '22461.3', 'HYBRID', 'MANUAL', 'Hyundai', 'Elantra', 2010, 'compact', 4, 94.7,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('1af9caa8-e6d2-4506-a6db-0898068ef028', 'V4AER9B1EZ2L4LOHZ', 'XVT-1139', 'White',
+        'AVAILABLE', '152934.9', 'HYBRID', 'AUTOMATIC', 'Tesla', 'Model 3', 2012, 'compact', 8,
+        121.82, 'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('92c223b9-3e14-42ba-b05f-86d65141e0b4', '8EXHA0ZY769AIKTR4', 'MWB-8671', 'Red', 'RENTED',
+        '161712.0', 'GASOLINE', 'AUTOMATIC', 'Chevrolet', 'Impala', 2021, 'van', 3, 132.3,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('b69e9938-b570-4894-8c36-fdbf50b65129', 'EPHQ6OEF02OWWTDTX', 'ODN-5048', 'Silver', 'RENTED',
+        '31666.0', 'DIESEL', 'MANUAL', 'BMW', 'X5', 2020, 'economy', 3, 106.79,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('c3753b14-724b-4a0f-b556-4ffd0e2e092a', '90Z3YFDU76AIEQUC6', 'RUZ-4155', 'Green',
+        'MAINTENANCE', '187849.8', 'HYBRID', 'AUTOMATIC', 'Toyota', 'Corolla', 2021, 'truck', 5,
+        85.36, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('fae40d62-30b7-4469-af19-8da4c29c910a', 'AAUSKF0XV667ESE2K', 'JDS-9857', 'Red',
+        'MAINTENANCE', '41400.7', 'HYBRID', 'AUTOMATIC', 'Honda', 'Civic', 2010, 'economy', 4,
+        145.17, 'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('3d957af1-2dfe-456f-8322-82f657adc2bc', '0CXRHZ0DIKD1WBK3G', 'LEE-4579', 'Blue',
+        'AVAILABLE', '137746.5', 'DIESEL', 'MANUAL', 'BMW', 'X5', 2016, 'compact', 6, 112.24,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('d7d1cbf1-614f-44de-83e7-5c16094b9f85', '274KKQZ2EPMZDY81E', 'EOA-1152', 'Green', 'RENTED',
+        '188953.5', 'HYBRID', 'AUTOMATIC', 'Tesla', 'Model 3', 2020, 'van', 3, 194.97,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('119d4ab9-0fe9-436d-a75f-d2f6304fa9ca', '3JVHW4C796J63CCO4', 'YQW-8769', 'Black',
+        'AVAILABLE', '77938.0', 'GASOLINE', 'MANUAL', 'Nissan', 'Rogue', 2006, 'compact', 5, 102.59,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('97a915d8-8f71-4d3f-b506-6a036297b62f', 'VKKCQ2R2JB7FHLMYX', 'ZBI-4161', 'Red', 'AVAILABLE',
+        '136115.1', 'HYBRID', 'AUTOMATIC', 'Toyota', 'Corolla', 2020, 'compact', 6, 96.39,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('655a564c-b1ee-40eb-a311-2bbebb3dbcfd', 'USD8KJUDYDMMMF94N', 'YFO-9666', 'Red', 'RENTED',
+        '89907.4', 'ELECTRIC', 'AUTOMATIC', 'Nissan', 'Rogue', 2013, 'suv', 5, 197.22,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('59d28c97-9b25-4858-b98d-00f6d59881b6', '2RM7F6ZUKJMVMHE3L', 'QOL-1318', 'Green', 'RENTED',
+        '93221.5', 'DIESEL', 'MANUAL', 'Tesla', 'Model 3', 2021, 'van', 2, 163.89,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('646ae67b-ea9e-4655-86cb-32c1a8ff4ef7', '47D65N7EJJIU40QKP', 'ZBU-8997', 'Silver',
+        'MAINTENANCE', '174817.9', 'ELECTRIC', 'MANUAL', 'Chevrolet', 'Impala', 2016, 'truck', 8,
+        172.41, '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('9418fb49-27ad-4af5-b021-2b18c03a44f4', 'YTBH79LO1108IP3UB', 'CUQ-6056', 'Black',
+        'MAINTENANCE', '87612.7', 'GASOLINE', 'MANUAL', 'Nissan', 'Rogue', 2010, 'suv', 7, 171.16,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('5e680436-f160-4a4d-99f4-5b3be2ad9b66', '8RCQ001WUL55Y90F3', 'YQR-5750', 'Silver',
+        'AVAILABLE', '185107.1', 'ELECTRIC', 'MANUAL', 'Chevrolet', 'Impala', 2017, 'compact', 7,
+        175.68, 'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('242d5702-64f6-4b9b-bbd6-66442102214b', '7ECSKEZIAFWYYPBZE', 'KMC-3550', 'Black',
+        'MAINTENANCE', '40296.7', 'ELECTRIC', 'AUTOMATIC', 'Ford', 'Focus', 2009, 'compact', 8,
+        165.37, '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('8f6f4b20-f304-4562-9d6a-8c5e42c8da8d', '37S5WA531F643UCN0', 'GEB-2216', 'Silver',
+        'AVAILABLE', '106589.2', 'GASOLINE', 'AUTOMATIC', 'Toyota', 'Corolla', 2008, 'suv', 7,
+        37.82, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('2ea51dd5-64d7-44bf-b667-500da7675e9d', 'DX92UUS9NQW7Z8G4E', 'SFB-6067', 'Black',
+        'MAINTENANCE', '110013.7', 'ELECTRIC', 'MANUAL', 'Chevrolet', 'Impala', 2009, 'compact', 4,
+        150.82, 'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('fbd1544b-a12c-4eb1-b239-e8dc7d100be9', '22AH4YH4IN4CNDGRL', 'NKG-9491', 'Blue',
+        'MAINTENANCE', '50906.3', 'GASOLINE', 'AUTOMATIC', 'Toyota', 'Corolla', 2013, 'truck', 5,
+        63.6, '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('3e19a28e-37e2-4f52-a0cb-17851693a3cd', '10FMMG5MDBYQNI871', 'FXR-5041', 'Red', 'AVAILABLE',
+        '60228.0', 'HYBRID', 'MANUAL', 'Honda', 'Civic', 2019, 'truck', 7, 115.93,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('7ce9ee70-2f0b-4aa2-831e-4fca620a5f39', 'CPI23JU6PN5T1F6VU', 'MMC-8797', 'White',
+        'MAINTENANCE', '63791.8', 'GASOLINE', 'MANUAL', 'Chevrolet', 'Impala', 2019, 'van', 4,
+        155.45, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('55a64fa4-b698-46a8-9055-29ef00166bb2', '8D83TJM2XCDPRG3AK', 'XWL-8876', 'Black',
+        'MAINTENANCE', '103119.4', 'GASOLINE', 'MANUAL', 'Ford', 'Focus', 2009, 'compact', 3, 89.91,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('d420a27f-33f6-4329-a6c0-63c95aa225a3', '5LYLDM0CIJ2NG0V4N', 'TQF-4007', 'Green', 'RENTED',
+        '108312.9', 'ELECTRIC', 'AUTOMATIC', 'Kia', 'Sportage', 2019, 'economy', 5, 181.73,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('2af9022d-f209-4d74-9daf-99ee3b7c32b8', 'ST7QR4HK52DKTAR0Z', 'RLS-1233', 'Black', 'RENTED',
+        '100284.5', 'HYBRID', 'MANUAL', 'Hyundai', 'Elantra', 2013, 'van', 5, 152.13,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('5bfc0b65-25b1-405f-bda4-85fdca68c2bc', 'N9I2K3N2BP0Y79GDX', 'GXG-5693', 'Green',
+        'MAINTENANCE', '124154.4', 'HYBRID', 'AUTOMATIC', 'Chevrolet', 'Impala', 2007, 'van', 6,
+        83.94, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('e467ad3f-4e2c-4042-abbd-48f9f355e774', 'ZAZA4SR3A3FAAKHKZ', 'VYL-9049', 'Red', 'AVAILABLE',
+        '197281.2', 'HYBRID', 'MANUAL', 'Ford', 'Focus', 2011, 'economy', 2, 46.68,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('b6edc3b7-d4f3-4db4-842c-532be6a12ed8', 'IIP885S5B16GW0YX6', 'GVH-6428', 'Black',
+        'MAINTENANCE', '54055.4', 'DIESEL', 'AUTOMATIC', 'Nissan', 'Rogue', 2005, 'truck', 6,
+        142.84, 'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('8125a7ff-1ccf-4f9f-8a66-f668768aa822', 'FZGPNW6H2410LO0O8', 'HNN-6604', 'White',
+        'AVAILABLE', '119202.9', 'ELECTRIC', 'MANUAL', 'Hyundai', 'Elantra', 2013, 'suv', 4, 197.27,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('f522993a-38f1-493b-a41f-f497df7c4e8a', 'LBMEVJ5NXF0ZPM66Z', 'UWW-2201', 'White', 'RENTED',
+        '75181.8', 'HYBRID', 'AUTOMATIC', 'Chevrolet', 'Impala', 2013, 'compact', 8, 64.28,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('f3fbd2e5-f252-4291-9f75-28c92be5672f', '92UWDLK5SM85OVF9W', 'GCL-9125', 'Black', 'RENTED',
+        '157755.9', 'GASOLINE', 'AUTOMATIC', 'Chevrolet', 'Impala', 2018, 'van', 5, 120.11,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('598e2715-6fee-4791-960c-ea1b2bfb870c', 'LJQXN2E0OZ2QAJWCE', 'OHN-1714', 'White',
+        'AVAILABLE', '161995.7', 'GASOLINE', 'AUTOMATIC', 'Chevrolet', 'Impala', 2013, 'economy', 6,
+        44.1, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('0f8b56e6-ce78-4aea-85b3-61d39ac863c7', 'YQL6GOO1UUECTDNDI', 'ILO-6162', 'Silver',
+        'AVAILABLE', '117137.9', 'HYBRID', 'MANUAL', 'Tesla', 'Model 3', 2019, 'truck', 2, 168.92,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('edb03d7c-2065-4f52-9f01-8ff6311448e8', 'QT1LHT81WNXXELVZ3', 'OWP-5409', 'Black',
+        'MAINTENANCE', '45048.9', 'HYBRID', 'MANUAL', 'Volkswagen', 'Golf', 2019, 'compact', 3,
+        37.18, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('0e9658e0-4f88-46d5-8a46-2b2f3cfb2d8d', 'JZ38YDGZLAIPUGHZQ', 'FGD-6381', 'White',
+        'AVAILABLE', '88113.2', 'GASOLINE', 'AUTOMATIC', 'Tesla', 'Model 3', 2014, 'truck', 6,
+        169.8, '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('b16a9dc7-a566-4c92-8f3d-a410912d8500', '3FK48X2YL7WLJ52IJ', 'RGK-7657', 'Green',
+        'MAINTENANCE', '156102.2', 'ELECTRIC', 'AUTOMATIC', 'Volkswagen', 'Golf', 2018, 'truck', 2,
+        69.64, 'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('59913d34-77fb-46c1-954d-233406ac6692', 'RO34HXQXKQGT7ZZU0', 'BGF-9410', 'White',
+        'AVAILABLE', '10311.2', 'HYBRID', 'MANUAL', 'Hyundai', 'Elantra', 2017, 'van', 2, 120.19,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('bb7969c8-441a-41c3-a3a3-79bd15fcdc0b', 'F69KV75547YVD194R', 'JAY-8099', 'Silver',
+        'MAINTENANCE', '82592.8', 'DIESEL', 'MANUAL', 'Toyota', 'Corolla', 2015, 'van', 2, 191.71,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('603aaae2-5a8a-47f6-84d7-5b04e3210037', 'ALBO225COZLY8M3AA', 'LOF-6513', 'Red', 'RENTED',
+        '85241.8', 'HYBRID', 'MANUAL', 'Kia', 'Sportage', 2005, 'suv', 5, 48.08,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('6d84e71b-2b88-4277-a020-1ead701cceaf', 'XQIFMCNSBN1QX9MFZ', 'FSO-9663', 'Silver', 'RENTED',
+        '128845.4', 'DIESEL', 'MANUAL', 'Ford', 'Focus', 2015, 'economy', 2, 92.56,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('a26da9c3-03e8-4024-9a9e-3db5e3951d2e', 'WBFHJ4WY7TQG9FGL6', 'QAM-9711', 'White', 'RENTED',
+        '145578.9', 'HYBRID', 'AUTOMATIC', 'Volkswagen', 'Golf', 2021, 'economy', 5, 49.06,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('fe8bee6f-3524-4380-8984-45f5809fc299', 'Q4EN4VYSARJ970F3W', 'SSQ-3338', 'Black',
+        'MAINTENANCE', '15549.7', 'ELECTRIC', 'MANUAL', 'Ford', 'Focus', 2009, 'economy', 7, 78.45,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('61adce85-8cea-494c-a089-b11995bf2c4e', 'J27U1KFSJ8IKMTPEJ', 'NJN-7011', 'Green', 'RENTED',
+        '158528.2', 'HYBRID', 'AUTOMATIC', 'Toyota', 'Corolla', 2006, 'truck', 5, 59.26,
+        'cf0e5477-4438-4fb2-a6da-aaf4c17ee757')
+        ,
+       ('1874e695-fc75-4988-8c90-bc947228665f', 'QQA4IIIRHUFLZFJT6', 'WFJ-9946', 'Silver', 'RENTED',
+        '199073.1', 'HYBRID', 'AUTOMATIC', 'Ford', 'Focus', 2013, 'economy', 3, 75.67,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('ec369658-bf57-44d8-bb57-c131d334cd5f', 'L3MRGYCH0YOAO35VT', 'INS-8758', 'White', 'RENTED',
+        '199789.7', 'ELECTRIC', 'AUTOMATIC', 'Tesla', 'Model 3', 2020, 'suv', 3, 51.59,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('cbeb58a4-1f67-46f7-ada5-1a78ac48e0a7', '3EIFRFBNDGMUJ5JN4', 'ZUP-8464', 'White',
+        'MAINTENANCE', '64205.5', 'ELECTRIC', 'MANUAL', 'Kia', 'Sportage', 2022, 'suv', 3, 130.63,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('aab5cda6-d6ad-4858-961b-aab94fbef86f', '1JXEOUUUHLFG45MNV', 'VUU-4799', 'Green',
+        'AVAILABLE', '49517.3', 'ELECTRIC', 'MANUAL', 'Hyundai', 'Elantra', 2017, 'van', 2, 61.48,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('dc4e3f03-6207-48d7-935c-f8e8a22e2ba8', 'HJ2390BJ8PWHOXAF1', 'UJW-1818', 'Red', 'AVAILABLE',
+        '15712.9', 'HYBRID', 'MANUAL', 'Toyota', 'Corolla', 2009, 'compact', 3, 170.36,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('8918b9d7-9a90-4067-aea2-60b7f80f0028', 'Y3F8B5NEF1I6V4VRL', 'MMS-5433', 'Blue',
+        'MAINTENANCE', '95313.3', 'DIESEL', 'MANUAL', 'Ford', 'Focus', 2018, 'economy', 4, 198.01,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('0e64a6d8-4a27-4155-8690-90b5f457115f', 'VXQO1NW34JIHK1TJF', 'ZUL-2863', 'Red', 'RENTED',
+        '186725.8', 'GASOLINE', 'AUTOMATIC', 'BMW', 'X5', 2022, 'truck', 5, 160.34,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('cff3735a-f330-43c9-a76b-44658f1b25c5', 'SZ1CHG2EXOE4YJ9QG', 'ZPM-8616', 'Black',
+        'MAINTENANCE', '96498.7', 'HYBRID', 'MANUAL', 'Kia', 'Sportage', 2009, 'suv', 5, 78.18,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('a5586706-a318-4f57-8932-6d0ef81d9762', 'EJWVO4EJSVHKKIE54', 'JVF-6872', 'White', 'RENTED',
+        '30920.8', 'ELECTRIC', 'AUTOMATIC', 'Tesla', 'Model 3', 2014, 'van', 3, 89.54,
+        'a5396e3b-e26f-401a-a831-f172105aa07a')
+        ,
+       ('e0d00ba9-fce5-437e-977e-0f8b520b87ee', '743819ICIQ8LIY3G6', 'XHS-3082', 'White', 'RENTED',
+        '16809.2', 'HYBRID', 'AUTOMATIC', 'Honda', 'Civic', 2005, 'van', 4, 172.03,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d')
+        ,
+       ('42db5cda-003d-4286-9be1-797c0f6e8515', '9ZGZXJDBYG9GBP3PV', 'VHJ-2220', 'White',
+        'AVAILABLE', '16234.7', 'ELECTRIC', 'MANUAL', 'Kia', 'Sportage', 2009, 'economy', 4, 133.46,
+        'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('9e9e6813-52a1-4a77-bcfc-2a591fe44922', '0ONSYAJE4MP0PCZ81', 'YXO-9223', 'Red',
+        'MAINTENANCE', '41671.1', 'ELECTRIC', 'MANUAL', 'Kia', 'Sportage', 2021, 'economy', 2,
+        82.15, 'bd8d9e52-bd9a-4135-93ad-f778b91b106c')
+        ,
+       ('d9906957-2ad9-4749-a57f-58ed8fee8c59', 'WOZFDT5H677SA2TE3', 'WYY-4934', 'Green',
+        'AVAILABLE', '140845.0', 'HYBRID', 'MANUAL', 'Honda', 'Civic', 2015, 'truck', 6, 199.33,
+        '9996484d-6b25-4530-8465-f37f4e6bb49b')
+        ,
+       ('096e5efa-2568-4bd5-a234-738ffeb7f3eb', 'KB8JTR8J95RO7Y8V4', 'TJP-1534', 'Black', 'RENTED',
+        '177217.6', 'ELECTRIC', 'AUTOMATIC', 'Tesla', 'Model 3', 2014, 'compact', 8, 136.63,
+        '7bb29c36-823f-43ea-9055-6d52047dff0d');
 
 INSERT INTO supplier (id, full_name, email, contact_number, address)
 VALUES ('1', 'Auto Supply Co', 'contact@autosupply.com', '+1112223333', '300 Supplier Blvd'),
@@ -359,7 +758,6 @@ VALUES ('30a18956-4b5e-47d8-b3e0-56904e85f682', '2024-09-03 10:00:00', 'OK', 'No
         'Interior needed deep cleaning', 12.0, 0.00, 50.00, '538a5680-f3c5-48f7-bbfb-35f973b857f0',
         'e1cb4706-06c3-4de6-b558-31d7a0c6f74c');
 
-
 INSERT INTO damage_report (id, part_affected, description, estimated_repair_cost, inspection_id)
 VALUES ('fc4d074e-feba-4c9d-a8e2-bb26d2f1ca5a', 'Rear Bumper', 'Dent on lower side', 180.00,
         'd6c793fe-3b38-40e3-a75f-df56aa0e61a6'),
@@ -367,4 +765,3 @@ VALUES ('fc4d074e-feba-4c9d-a8e2-bb26d2f1ca5a', 'Rear Bumper', 'Dent on lower si
         'd6c793fe-3b38-40e3-a75f-df56aa0e61a6'),
        ('92f3fa20-ddea-4ba7-abd8-aa1f0cbab25a', 'Floor Mat', 'Severe staining', 90.00,
         'c46ccf84-6803-4ef7-a3fc-0ff975a99197');
-
