@@ -1,0 +1,79 @@
+.user-switcher {
+  position: relative;
+  z-index: 1000;
+}
+
+.user-switcher-current {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.user-switcher-current:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-icon {
+  font-size: 1.2rem;
+}
+
+.dropdown-icon {
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+}
+
+.user-switcher-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 200px;
+  margin: 0.25rem 0 0 0;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.user-switcher-options li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #333;
+}
+
+.user-switcher-options li:hover {
+  background-color: #f5f5f5;
+}
+
+.user-switcher-options li.active {
+  background-color: #e6f7ff;
+  font-weight: 500;
+}
+
+.user-role {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.user-role:first-child {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+/* Style based on role */
+.user-switcher-options li:nth-child(3) .user-role {
+  background-color: #f6ffed;
+  color: #52c41a;
+} 

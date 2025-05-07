@@ -2,9 +2,13 @@ package db.com.rentalvehicle.controller;
 
 import db.com.rentalvehicle.dto.AvailabilityResponse;
 import db.com.rentalvehicle.dto.AvailableDatesResponse;
+import db.com.rentalvehicle.dto.CarCreateDTO;
+import db.com.rentalvehicle.dto.CarDTO;
 import db.com.rentalvehicle.dto.CarSearchParameters;
 import db.com.rentalvehicle.dto.CarSearchResult;
 import db.com.rentalvehicle.dto.CarSearchSelectors;
+import db.com.rentalvehicle.mapper.EntityMapper;
+import db.com.rentalvehicle.model.Car;
 import db.com.rentalvehicle.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,6 +28,7 @@ import java.util.List;
 public class CarController {
 
   private final CarService carService;
+  private final EntityMapper entityMapper;
 
   @Operation(
       summary = "Get car details by ID",
@@ -84,5 +89,39 @@ public class CarController {
       @RequestBody CarSearchParameters searchParameters
   ) {
     return ResponseEntity.ok(carService.searchCars(searchParameters));
+  }
+
+  @Operation(
+      summary = "Get all cars",
+      description = "Retrieves all cars in the system"
+  )
+  @GetMapping
+  public ResponseEntity<List<CarDTO>> getAllCars() {
+    List<Car> cars = carService.getAllCars();
+    return ResponseEntity.ok(entityMapper.toCarDTOList(cars));
+  }
+
+  @Operation(
+      summary = "Get cars by office",
+      description = "Retrieves all cars located at a specific office"
+  )
+  @GetMapping("/office/{officeId}")
+  public ResponseEntity<List<CarDTO>> getCarsByOffice(
+      @Parameter(description = "ID of the office") @PathVariable String officeId
+  ) {
+    List<Car> cars = carService.getCarsByOffice(officeId);
+    return ResponseEntity.ok(entityMapper.toCarDTOList(cars));
+  }
+
+  @Operation(
+      summary = "Add a new car",
+      description = "Adds a new car to the system"
+  )
+  @PostMapping
+  public ResponseEntity<CarDTO> addCar(
+      @Parameter(description = "Car details") @RequestBody CarCreateDTO carCreateDTO
+  ) {
+    Car savedCar = carService.addCar(carCreateDTO);
+    return ResponseEntity.ok(entityMapper.toCarDTO(savedCar));
   }
 }
