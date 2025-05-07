@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getInspectionDetails, submitInspection } from '../services/api';
 import { InspectionDetailsResponse, DamageReport, ReturnInspectionRequest } from '../types/InspectionTypes';
+import { useUser } from '../App';
 import './CarInspectionDetails.css';
 
 const CarInspectionDetails = () => {
@@ -19,8 +20,9 @@ const CarInspectionDetails = () => {
   const [notes, setNotes] = useState('');
   const [damageReports, setDamageReports] = useState<DamageReport[]>([]);
   
-  // Hardcoded worker ID - in a real app, this would come from authentication
-  const workerId = "1";
+  // Get the current user from context
+  const { user } = useUser();
+  const workerId = user.id;
   
   useEffect(() => {
     if (!rentalId) return;

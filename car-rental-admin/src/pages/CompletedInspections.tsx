@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCompletedInspections } from '../services/api';
 import { CompletedInspection } from '../types/InspectionTypes';
+import { useUser } from '../App';
 import './CompletedInspections.css';
 
 const CompletedInspections = () => {
@@ -9,8 +10,9 @@ const CompletedInspections = () => {
   const [error, setError] = useState<string | null>(null);
   const [expandedInspection, setExpandedInspection] = useState<string | null>(null);
   
-  // Hardcoded worker ID - in a real app, this would come from authentication
-  const workerId = "1";
+  // Get the current user from context
+  const { user } = useUser();
+  const workerId = user.id;
   
   useEffect(() => {
     const fetchInspections = async () => {
