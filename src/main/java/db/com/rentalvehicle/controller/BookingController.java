@@ -6,6 +6,8 @@ import db.com.rentalvehicle.dto.ReturnInspectionRequest;
 import db.com.rentalvehicle.dto.ReturnInspectionResponse;
 import db.com.rentalvehicle.dto.UserBookingResponse;
 import db.com.rentalvehicle.dto.WorkerDashboardResponse;
+import db.com.rentalvehicle.dto.InspectionDetailsResponse;
+import db.com.rentalvehicle.dto.CompletedInspectionResponse;
 import db.com.rentalvehicle.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,10 +43,10 @@ public class BookingController {
 
   @Operation(
       summary = "Start a booking",
-      description = "Starts an existing booking (changes status from RESERVED to ACTIVE)"
+      description = "Starts an existing booking (changes status from RESERVED to PICKED_UP)"
   )
-  @PostMapping("/{bookingId}/start")
-  public ResponseEntity<Void> startBooking(
+  @PostMapping("/{bookingId}/pickup")
+  public ResponseEntity<Void> pickupBooking(
       @Parameter(description = "ID of the booking to start") 
       @PathVariable String bookingId
   ) {
@@ -88,5 +90,56 @@ public class BookingController {
   ) {
       WorkerDashboardResponse response = bookingService.getWorkerDashboard(workerId);
       return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("/inspection/{rentalId}")
+  @Operation(
+      summary = "Get inspection details",
+      description = "Retrieves details needed for the car inspection"
+  )
+  public ResponseEntity<InspectionDetailsResponse> getInspectionDetails(
+      @Parameter(description = "ID of the rental") 
+      @PathVariable String rentalId
+  ) {
+      InspectionDetailsResponse response = bookingService.getInspectionDetails(rentalId);
+      return ResponseEntity.ok(response);
+  }
+
+  @PostMapping("/inspection/{rentalId}/submit")
+  @Operation(
+      summary = "Submit inspection",
+      description = "Submit the inspection results for a rental"
+  )
+  public ResponseEntity<ReturnInspectionResponse> submitInspection(
+      @Parameter(description = "ID of the rental") 
+      @PathVariable String rentalId,
+      @Valid @RequestBody ReturnInspectionRequest request
+  ) {
+      ReturnInspectionResponse response = bookingService.finishBooking(rentalId, request);
+      return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("/worker/{workerId}/completed-inspections")
+  @Operation(
+      summary = "Get completed inspections",
+      description = "Retrieves all completed inspections performed by the worker"
+  )
+  public ResponseEntity<List<CompletedInspectionResponse>> getCompletedInspections(
+      @Parameter(description = "ID of the worker") 
+      @PathVariable String workerId
+  ) {
+      List<CompletedInspectionResponse> response = bookingService.getCompletedInspections(workerId);
+      return ResponseEntity.ok(response);
+  }
+
+  /**
+   * Mark booking as returned.
+   */
+  @PostMapping("/{bookingId}/return")
+  public ResponseEntity<Void> returnBooking(
+      @PathVariable String bookingId
+  ) {
+    bookingService.returnBooking(bookingId);
+    return ResponseEntity.noContent().build();
   }
 }

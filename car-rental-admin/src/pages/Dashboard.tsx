@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { getWorkerDashboard } from '../services/api';
 import type { WorkerDashboardResponse } from '../types/WorkerTypes';
 import './Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState<WorkerDashboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   // Hardcoded worker ID
   const workerId = "1";
@@ -76,7 +78,7 @@ const Dashboard = () => {
                   <p><strong>Client:</strong> {inspection.clientName}</p>
                   <p><strong>Contact:</strong> {inspection.clientContact}</p>
                 </div>
-                <button className="action-button">
+                <button className="action-button" onClick={() => navigate(`/inspections/${inspection.rentalId}`)}>
                   Start Inspection
                 </button>
               </div>

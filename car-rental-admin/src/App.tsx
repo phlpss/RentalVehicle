@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useState } from 'react';
 import Dashboard from './pages/Dashboard';
 import CarInspections from './pages/CarInspections';
+import CarInspectionDetails from './pages/CarInspectionDetails';
+import CompletedInspections from './pages/CompletedInspections';
 import CarManagement from './pages/CarManagement';
 import Reports from './pages/Reports';
 import Layout from './components/Layout';
@@ -33,6 +35,8 @@ function App() {
           
           {/* Worker routes */}
           <Route path="inspections" element={<CarInspections />} />
+          <Route path="inspections/:rentalId" element={<CarInspectionDetails />} />
+          <Route path="completed-inspections" element={<CompletedInspections />} />
           
           {/* Admin routes - these will be inaccessible with the current hardcoded role */}
           <Route path="cars" element={<CarManagement />} />

@@ -22,9 +22,14 @@ const Layout = ({ user, onLogout }: LayoutProps) => {
               <Link to="/dashboard">Dashboard</Link>
             </li>
             {user?.role === 'WORKER' && (
-              <li className={location.pathname === '/inspections' ? 'active' : ''}>
-                <Link to="/inspections">Car Inspections</Link>
-              </li>
+              <>
+                <li className={location.pathname === '/inspections' ? 'active' : ''}>
+                  <Link to="/inspections">Car Inspections</Link>
+                </li>
+                <li className={location.pathname === '/completed-inspections' ? 'active' : ''}>
+                  <Link to="/completed-inspections">Completed Inspections</Link>
+                </li>
+              </>
             )}
             {user?.role === 'ADMIN' && (
               <>

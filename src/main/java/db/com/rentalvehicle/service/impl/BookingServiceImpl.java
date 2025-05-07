@@ -5,6 +5,7 @@ import db.com.rentalvehicle.model.*;
 import db.com.rentalvehicle.repository.CarRepository;
 import db.com.rentalvehicle.repository.ClientRepository;
 import db.com.rentalvehicle.repository.RentalRepository;
+import db.com.rentalvehicle.repository.ReturnInspectionRepository;
 import db.com.rentalvehicle.repository.WorkerRepository;
 import db.com.rentalvehicle.service.BookingService;
 import db.com.rentalvehicle.service.CarService;
@@ -28,6 +29,7 @@ public class BookingServiceImpl implements BookingService {
     private final ClientRepository clientRepository;
     private final CarService carService;
     private final WorkerRepository workerRepository;
+    private final ReturnInspectionRepository returnInspectionRepository;
 
     @Override
     @Transactional
@@ -100,9 +102,77 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public void returnBooking(String bookingId) {
+        Rental rental = rentalRepository.findById(bookingId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found"));
+
+        if (rental.getStatus() != RentalStatus.PICKED_UP) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Booking can only be returned from PICKED_UP status"
+            );
+        }
+
+        rental.setStatus(RentalStatus.RETURNED);
+        rentalRepository.save(rental);
+
+        // Car status remains RENTED until inspection
+    }
+
+    @Override
+    @Transactional
     public ReturnInspectionResponse finishBooking(String bookingId, ReturnInspectionRequest request) {
-        // This will be implemented later
-        return null;
+        Rental rental = rentalRepository.findById(bookingId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found"));
+        
+        Worker worker = workerRepository.findById(request.getWorkerId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Worker not found"));
+        
+        if (rental.getStatus() != RentalStatus.RETURNED) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Booking can only be inspected from RETURNED status"
+            );
+        }
+        
+        // Create inspection
+        ReturnInspection inspection = new ReturnInspection();
+        inspection.setInspectionDate(LocalDateTime.now());
+        inspection.setRental(rental);
+        inspection.setInspectedBy(worker);
+        inspection.setWearLevelPercentage(request.getWearLevelPercentage());
+        inspection.setDamagePenalty(request.getDamagePenalty());
+        inspection.setCleaningFee(request.getCleaningFee());
+        inspection.setNotes(request.getNotes());
+        
+        // Determine inspection status based on damage and wear
+        InspectionStatus status = InspectionStatus.OK;
+        
+        if (request.getDamagePenalty() > 0) {
+            status = InspectionStatus.FINED;
+        } else if (request.getWearLevelPercentage() > 70) {
+            status = InspectionStatus.NEEDS_REPAIR;
+        }
+        
+        inspection.setStatus(status);
+        
+        // Save the inspection
+        inspection = returnInspectionRepository.save(inspection);
+        
+        // Update rental status
+        rental.setStatus(RentalStatus.INSPECTED);
+        rentalRepository.save(rental);
+        
+        // Update car status to AVAILABLE
+        carService.updateStatus(rental.getCar().getId(), "AVAILABLE");
+        
+        // Prepare response
+        ReturnInspectionResponse response = new ReturnInspectionResponse();
+        response.setInspectionId(inspection.getId());
+        response.setStatus(inspection.getStatus().name());
+        response.setTotalPenalty(inspection.getDamagePenalty() + inspection.getCleaningFee());
+        
+        return response;
     }
 
     @Override
@@ -118,7 +188,60 @@ public class BookingServiceImpl implements BookingService {
                     response.setEnd(rental.getRentalEnd());
                     response.setCarBrand(rental.getCar().getBrand());
                     response.setModel(rental.getCar().getModel());
-                    response.setLocation(rental.getCar().getOffice().getAddress());
+                    
+                    // Include both address and city in the location with null checks
+                    String address = rental.getCar().getOffice() != null ? rental.getCar().getOffice().getAddress() : null;
+                    String city = rental.getCar().getOffice() != null ? rental.getCar().getOffice().getCity() : null;
+                    
+                    if (address == null || address.isEmpty()) {
+                        address = "Unknown address";
+                    }
+                    
+                    if (city != null && !city.isEmpty()) {
+                        response.setLocation(address + ", " + city);
+                    } else {
+                        response.setLocation(address);
+                    }
+                    
+                    response.setStatus(rental.getStatus().name());
+                    
+                    // Add inspection details if the rental has been inspected
+                    if (rental.getStatus() == RentalStatus.INSPECTED) {
+                        ReturnInspection inspection = returnInspectionRepository.findByRental(rental)
+                                .orElse(null);
+                        
+                        if (inspection != null) {
+                            UserBookingResponse.InspectionDetailsDto inspectionDetails = new UserBookingResponse.InspectionDetailsDto();
+                            inspectionDetails.setInspectionId(inspection.getId());
+                            inspectionDetails.setWearLevelPercentage(inspection.getWearLevelPercentage());
+                            inspectionDetails.setDamagePenalty(inspection.getDamagePenalty());
+                            inspectionDetails.setCleaningFee(inspection.getCleaningFee());
+                            inspectionDetails.setTotalPenalty(inspection.getDamagePenalty() + inspection.getCleaningFee());
+                            inspectionDetails.setNotes(inspection.getNotes());
+                            inspectionDetails.setStatus(inspection.getStatus().name());
+                            
+                            // Map damage reports
+                            if (inspection.getDamageReports() != null && !inspection.getDamageReports().isEmpty()) {
+                                List<UserBookingResponse.DamageReportDto> damageReportDtos = 
+                                    inspection.getDamageReports().stream().map(dr -> {
+                                        UserBookingResponse.DamageReportDto damageDto = 
+                                                new UserBookingResponse.DamageReportDto();
+                                        damageDto.setId(dr.getId());
+                                        damageDto.setPartAffected(dr.getPartAffected());
+                                        damageDto.setDescription(dr.getDescription());
+                                        damageDto.setEstimatedRepairCost(dr.getEstimatedRepairCost());
+                                        return damageDto;
+                                    }).collect(Collectors.toList());
+                                
+                                inspectionDetails.setDamageReports(damageReportDtos);
+                            } else {
+                                inspectionDetails.setDamageReports(List.of());
+                            }
+                            
+                            response.setInspectionDetails(inspectionDetails);
+                        }
+                    }
+                    
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -175,5 +298,71 @@ public class BookingServiceImpl implements BookingService {
         response.setTotalActiveRentals(activeRentals.size());
 
         return response;
+    }
+
+    @Override
+    public InspectionDetailsResponse getInspectionDetails(String rentalId) {
+        Rental rental = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rental not found"));
+        
+        InspectionDetailsResponse response = new InspectionDetailsResponse();
+        response.setRentalId(rental.getId());
+        response.setCarBrand(rental.getCar().getBrand());
+        response.setModel(rental.getCar().getModel());
+        response.setLicensePlateNum(rental.getCar().getLicensePlateNum());
+        response.setVin(rental.getCar().getVin());
+        response.setClientName(rental.getClient().getFullName());
+        response.setClientContact(rental.getClient().getContactNumber());
+        response.setStartDate(rental.getRentalStart().toString());
+        response.setEndDate(rental.getRentalEnd().toString());
+        response.setStatus(rental.getStatus().name());
+        response.setFullPrice(rental.getFullPrice());
+        
+        // Empty damage reports list - will be populated during inspection
+        response.setDamageReports(List.of());
+        
+        return response;
+    }
+
+    @Override
+    public List<CompletedInspectionResponse> getCompletedInspections(String workerId) {
+        Worker worker = workerRepository.findById(workerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Worker not found"));
+        
+        // Find all inspections performed by this worker
+        List<ReturnInspection> inspections = returnInspectionRepository.findByInspectedBy(worker);
+        
+        return inspections.stream().map(inspection -> {
+            CompletedInspectionResponse dto = new CompletedInspectionResponse();
+            dto.setInspectionId(inspection.getId());
+            dto.setRentalId(inspection.getRental().getId());
+            dto.setInspectionDate(inspection.getInspectionDate());
+            dto.setCarBrand(inspection.getRental().getCar().getBrand());
+            dto.setModel(inspection.getRental().getCar().getModel());
+            dto.setLicensePlateNum(inspection.getRental().getCar().getLicensePlateNum());
+            dto.setClientName(inspection.getRental().getClient().getFullName());
+            dto.setStatus(inspection.getStatus().name());
+            dto.setWearLevelPercentage(inspection.getWearLevelPercentage());
+            dto.setDamagePenalty(inspection.getDamagePenalty());
+            dto.setCleaningFee(inspection.getCleaningFee());
+            dto.setTotalPenalty(inspection.getDamagePenalty() + inspection.getCleaningFee());
+            dto.setNotes(inspection.getNotes());
+            
+            // Convert damage reports
+            List<CompletedInspectionResponse.DamageReportDto> damageReportDtos = 
+                    inspection.getDamageReports().stream().map(dr -> {
+                        CompletedInspectionResponse.DamageReportDto damageDto = 
+                                new CompletedInspectionResponse.DamageReportDto();
+                        damageDto.setId(dr.getId());
+                        damageDto.setPartAffected(dr.getPartAffected());
+                        damageDto.setDescription(dr.getDescription());
+                        damageDto.setEstimatedRepairCost(dr.getEstimatedRepairCost());
+                        return damageDto;
+                    }).collect(Collectors.toList());
+            
+            dto.setDamageReports(damageReportDtos);
+            
+            return dto;
+        }).collect(Collectors.toList());
     }
 }
