@@ -1,35 +1,96 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import CarInspections from './pages/CarInspections';
+import CarManagement from './pages/CarManagement';
+import Reports from './pages/Reports';
+import Layout from './components/Layout';
+import { User, UserRole } from './types';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState<User | null>(null);
+
+  const handleLogin = (userData: User) => {
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
+  // Protected route component
+  const ProtectedRoute = ({ 
+    children, 
+    allowedRoles 
+  }: { 
+    children: React.ReactNode; 
+    allowedRoles: UserRole[] 
+  }) => {
+    if (!user) {
+      return <Navigate to="/login" />;
+    }
+
+    if (!allowedRoles.includes(user.role)) {
+      return <Navigate to="/dashboard" />;
+    }
+
+    return <>{children}</>;
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route 
+          path="/login" 
+          element={
+            user ? <Navigate to="/dashboard" /> : <Login onLogin={handleLogin} />
+          } 
+        />
+        
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute allowedRoles={['WORKER', 'ADMIN']}>
+              <Layout user={user} onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="/dashboard" />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          
+          {/* Worker routes */}
+          <Route
+            path="inspections"
+            element={
+              <ProtectedRoute allowedRoles={['WORKER']}>
+                <CarInspections />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Admin routes */}
+          <Route
+            path="cars"
+            element={
+              <ProtectedRoute allowedRoles={['ADMIN']}>
+                <CarManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="reports"
+            element={
+              <ProtectedRoute allowedRoles={['ADMIN']}>
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
