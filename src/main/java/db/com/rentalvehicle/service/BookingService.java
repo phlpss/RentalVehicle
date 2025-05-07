@@ -1,9 +1,8 @@
 package db.com.rentalvehicle.service;
 
-import db.com.rentalvehicle.dto.BookingRequest;
-import db.com.rentalvehicle.dto.BookingResponse;
-import db.com.rentalvehicle.dto.ReturnInspectionRequest;
-import db.com.rentalvehicle.dto.ReturnInspectionResponse;
+import db.com.rentalvehicle.dto.*;
+
+import java.util.List;
 
 public interface BookingService {
 
@@ -11,5 +10,15 @@ public interface BookingService {
 
   void startBooking(String bookingId);
 
+  void returnBooking(String bookingId);
+
   ReturnInspectionResponse finishBooking(String bookingId, ReturnInspectionRequest request);
+
+  List<UserBookingResponse> getUserBookings(String userId);
+
+  WorkerDashboardResponse getWorkerDashboard(String workerId);
+
+  InspectionDetailsResponse getInspectionDetails(String rentalId);
+
+  List<CompletedInspectionResponse> getCompletedInspections(String workerId);
 }

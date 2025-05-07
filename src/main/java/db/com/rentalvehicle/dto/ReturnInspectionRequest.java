@@ -12,5 +12,6 @@ public class ReturnInspectionRequest {
   private double wearLevelPercentage;
   private double damagePenalty;
   private double cleaningFee;
+  private String notes;
   private List<String> damageReportIds;
 }

@@ -1,5 +1,5 @@
 import type { CarSearchParameters, CarSearchResult, CarSearchSelectors } from '../types/CarTypes';
-import type { BookingRequest, BookingResponse, AvailableDatesResponse } from '../types/BookingTypes';
+import type { BookingRequest, BookingResponse, AvailableDatesResponse, UserBooking, InspectionDetails } from '../types/BookingTypes';
 
 const API_URL = 'http://localhost:8080/api';
 
@@ -99,6 +99,54 @@ export const createBooking = async (bookingRequest: BookingRequest): Promise<Boo
     return await response.json();
   } catch (error) {
     console.error('Error creating booking:', error);
+    throw error;
+  }
+};
+
+export const getUserBookings = async (userId: string): Promise<UserBooking[]> => {
+  try {
+    const response = await fetch(`${API_URL}/bookings/user/${userId}`);
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw new Error(errorData?.message || 'Failed to fetch user bookings');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching user bookings:', error);
+    throw error;
+  }
+};
+
+export const pickupBooking = async (bookingId: string): Promise<void> => {
+  try {
+    const response = await fetch(`${API_URL}/bookings/${bookingId}/pickup`, {
+      method: 'POST',
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw new Error(errorData?.message || 'Failed to pick up vehicle');
+    }
+  } catch (error) {
+    console.error('Error picking up vehicle:', error);
+    throw error;
+  }
+};
+
+export const returnBooking = async (bookingId: string): Promise<void> => {
+  try {
+    const response = await fetch(`${API_URL}/bookings/${bookingId}/return`, {
+      method: 'POST',
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw new Error(errorData?.message || 'Failed to return vehicle');
+    }
+  } catch (error) {
+    console.error('Error returning vehicle:', error);
     throw error;
   }
 }; 
