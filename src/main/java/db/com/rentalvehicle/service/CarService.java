@@ -160,6 +160,7 @@ public class CarService {
 
     public List<CarSearchResult> searchCars(CarSearchParameters searchParameters) {
         return carRepository.findAll().stream()
+                .filter(car->car.getStatus().equals("AVAILABLE"))
                 .filter(car -> matchesSearchParameters(car, searchParameters))
                 .map(this::mapToSearchResult)
                 .collect(Collectors.toList());

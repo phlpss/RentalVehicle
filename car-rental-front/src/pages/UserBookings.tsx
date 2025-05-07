@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUserBookings, pickupBooking, returnBooking } from '../services/api';
 import type { UserBooking, DamageReport } from '../types/BookingTypes';
+import { useClientUser } from '../App';
 import './UserBookings.css';
 
 const UserBookings = () => {
@@ -10,8 +11,9 @@ const UserBookings = () => {
   const [error, setError] = useState<string | null>(null);
   const [expandedBooking, setExpandedBooking] = useState<string | null>(null);
 
-  // Mock user ID - in a real app, this would come from authentication
-  const userId = "1";
+  // Get user from context instead of hardcoding
+  const { user } = useClientUser();
+  const userId = user.id;
 
   useEffect(() => {
     fetchBookings();

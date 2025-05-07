@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getAvailableDates, createBooking, getCarDetails } from '../../services/api';
 import type { CarSearchResult } from '../../types/CarTypes';
+import type { AvailableDatesResponse } from '../../types/BookingTypes';
+import { useClientUser } from '../../App';
 import './BookingModal.css';
 
 interface BookingModalProps {
@@ -9,16 +11,9 @@ interface BookingModalProps {
   onBookingSuccess: (bookingId: string) => void;
 }
 
-interface AvailableDates {
-  carId: string;
-  availableDates: string[];
-  earliestAvailableDate: string;
-  latestAvailableDate: string;
-}
-
 const BookingModal = ({ carId, onClose, onBookingSuccess }: BookingModalProps) => {
   const [loading, setLoading] = useState(true);
-  const [availableDates, setAvailableDates] = useState<AvailableDates | null>(null);
+  const [availableDates, setAvailableDates] = useState<AvailableDatesResponse | null>(null);
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
   const [bookingInProgress, setBookingInProgress] = useState(false);
@@ -26,8 +21,9 @@ const BookingModal = ({ carId, onClose, onBookingSuccess }: BookingModalProps) =
   const [carDetails, setCarDetails] = useState<CarSearchResult | null>(null);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  // Mock client ID - in a real app, this would come from authentication
-  const clientId = "1";
+  // Get client ID from context instead of hardcoding
+  const { user } = useClientUser();
+  const clientId = user.id;
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,0 +1,58 @@
+.client-user-switcher {
+  position: relative;
+  z-index: 1000;
+}
+
+.client-user-switcher .user-switcher-current {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  color: white;
+}
+
+.client-user-switcher .user-switcher-current:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.client-user-switcher .user-icon {
+  font-size: 1.2rem;
+}
+
+.client-user-switcher .dropdown-icon {
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+}
+
+.client-user-switcher .user-switcher-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 200px;
+  margin: 0.25rem 0 0 0;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.client-user-switcher .user-switcher-options li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #333;
+}
+
+.client-user-switcher .user-switcher-options li:hover {
+  background-color: #f5f5f5;
+}
+
+.client-user-switcher .user-switcher-options li.active {
+  background-color: #e6f7ff;
+  font-weight: 500;
+} 
