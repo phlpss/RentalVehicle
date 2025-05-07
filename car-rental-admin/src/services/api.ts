@@ -160,4 +160,45 @@ export const addCar = async (car: Omit<Car, 'id'>): Promise<Car> => {
     console.error('Error adding new car:', error);
     throw error;
   }
+};
+
+// ... existing code ...
+
+// Report API calls
+
+export const getRevenueReport = async (startDate: string, endDate: string) => {
+  try {
+    const response = await fetch(`${API_URL}/api/reports/revenue?startDate=${startDate}&endDate=${endDate}`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch revenue report');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching revenue report:', error);
+    throw error;
+  }
+};
+
+// ... existing code ...
+
+export const updateCarStatus = async (carId: string, status: string): Promise<Car> => {
+  try {
+    const response = await fetch(`${API_URL}/api/cars/${carId}/status?status=${status}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to update car status');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating car status:', error);
+    throw error;
+  }
 }; 

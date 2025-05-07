@@ -7,4 +7,4 @@ import java.util.List;
 
 public interface DamageReportRepository extends JpaRepository<DamageReport, String> {
     List<DamageReport> findByInspectionId(String inspectionId);
-} 
+}

@@ -30,6 +30,7 @@ public class BookingServiceImpl implements BookingService {
     private final CarService carService;
     private final WorkerRepository workerRepository;
     private final ReturnInspectionRepository returnInspectionRepository;
+    private final ReturnInspectionServiceImpl returnInspectionServiceImpl;
 
     @Override
     @Transactional
@@ -96,9 +97,6 @@ public class BookingServiceImpl implements BookingService {
 
         rental.setStatus(RentalStatus.PICKED_UP);
         rentalRepository.save(rental);
-
-        // Update car status
-        carService.updateStatus(rental.getCar().getId(), "RENTED");
     }
 
     @Override
@@ -122,57 +120,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public ReturnInspectionResponse finishBooking(String bookingId, ReturnInspectionRequest request) {
-        Rental rental = rentalRepository.findById(bookingId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found"));
-        
-        Worker worker = workerRepository.findById(request.getWorkerId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Worker not found"));
-        
-        if (rental.getStatus() != RentalStatus.RETURNED) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Booking can only be inspected from RETURNED status"
-            );
-        }
-        
-        // Create inspection
-        ReturnInspection inspection = new ReturnInspection();
-        inspection.setInspectionDate(LocalDateTime.now());
-        inspection.setRental(rental);
-        inspection.setInspectedBy(worker);
-        inspection.setWearLevelPercentage(request.getWearLevelPercentage());
-        inspection.setDamagePenalty(request.getDamagePenalty());
-        inspection.setCleaningFee(request.getCleaningFee());
-        inspection.setNotes(request.getNotes());
-        
-        // Determine inspection status based on damage and wear
-        InspectionStatus status = InspectionStatus.OK;
-        
-        if (request.getDamagePenalty() > 0) {
-            status = InspectionStatus.FINED;
-        } else if (request.getWearLevelPercentage() > 70) {
-            status = InspectionStatus.NEEDS_REPAIR;
-        }
-        
-        inspection.setStatus(status);
-        
-        // Save the inspection
-        inspection = returnInspectionRepository.save(inspection);
-        
-        // Update rental status
-        rental.setStatus(RentalStatus.INSPECTED);
-        rentalRepository.save(rental);
-        
-        // Update car status to AVAILABLE
-        carService.updateStatus(rental.getCar().getId(), "AVAILABLE");
-        
-        // Prepare response
-        ReturnInspectionResponse response = new ReturnInspectionResponse();
-        response.setInspectionId(inspection.getId());
-        response.setStatus(inspection.getStatus().name());
-        response.setTotalPenalty(inspection.getDamagePenalty() + inspection.getCleaningFee());
-        
-        return response;
+       return returnInspectionServiceImpl.submitInspection(bookingId,request);
     }
 
     @Override

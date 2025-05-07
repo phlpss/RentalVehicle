@@ -152,6 +152,16 @@
   color: #856404;
 }
 
+.status-needs_repair {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-in_repair {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
 /* Add car form styling */
 .add-car-form-container {
   background-color: #f8f9fa;
@@ -222,6 +232,53 @@
 }
 
 .submit-button:hover:not(:disabled) {
+  background-color: #096dd9;
+}
+
+/* Update status modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.action-button {
+  background-color: #1890ff;
+  color: white;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
+}
+
+.action-button:hover:not(:disabled) {
   background-color: #096dd9;
 }
 
