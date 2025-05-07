@@ -4,6 +4,7 @@ import db.com.rentalvehicle.dto.BookingRequest;
 import db.com.rentalvehicle.dto.BookingResponse;
 import db.com.rentalvehicle.dto.ReturnInspectionRequest;
 import db.com.rentalvehicle.dto.ReturnInspectionResponse;
+import db.com.rentalvehicle.dto.UserBookingResponse;
 import db.com.rentalvehicle.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,6 +13,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -57,5 +60,18 @@ public class BookingController {
   ) {
     ReturnInspectionResponse resp = bookingService.finishBooking(bookingId, request);
     return ResponseEntity.ok(resp);
+  }
+
+  @GetMapping("/user/{userId}")
+  @Operation(
+      summary = "Get user bookings",
+      description = "Retrieves all bookings for a specific user"
+  )
+  public ResponseEntity<List<UserBookingResponse>> getUserBookings(
+      @Parameter(description = "ID of the user") 
+      @PathVariable String userId
+  ) {
+      List<UserBookingResponse> bookings = bookingService.getUserBookings(userId);
+      return ResponseEntity.ok(bookings);
   }
 }

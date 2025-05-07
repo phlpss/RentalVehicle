@@ -101,4 +101,20 @@ export const createBooking = async (bookingRequest: BookingRequest): Promise<Boo
     console.error('Error creating booking:', error);
     throw error;
   }
+};
+
+export const getUserBookings = async (userId: string): Promise<UserBooking[]> => {
+  try {
+    const response = await fetch(`${API_URL}/bookings/user/${userId}`);
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw new Error(errorData?.message || 'Failed to fetch user bookings');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching user bookings:', error);
+    throw error;
+  }
 }; 
