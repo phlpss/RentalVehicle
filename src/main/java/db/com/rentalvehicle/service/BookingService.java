@@ -13,4 +13,6 @@ public interface BookingService {
   ReturnInspectionResponse finishBooking(String bookingId, ReturnInspectionRequest request);
 
   List<UserBookingResponse> getUserBookings(String userId);
+
+  WorkerDashboardResponse getWorkerDashboard(String workerId);
 }

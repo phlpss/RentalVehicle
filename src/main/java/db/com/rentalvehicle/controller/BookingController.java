@@ -5,6 +5,7 @@ import db.com.rentalvehicle.dto.BookingResponse;
 import db.com.rentalvehicle.dto.ReturnInspectionRequest;
 import db.com.rentalvehicle.dto.ReturnInspectionResponse;
 import db.com.rentalvehicle.dto.UserBookingResponse;
+import db.com.rentalvehicle.dto.WorkerDashboardResponse;
 import db.com.rentalvehicle.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RequiredArgsConstructor
 @Tag(name = "Booking Management", description = "APIs for managing car bookings")
 public class BookingController {
@@ -73,5 +75,18 @@ public class BookingController {
   ) {
       List<UserBookingResponse> bookings = bookingService.getUserBookings(userId);
       return ResponseEntity.ok(bookings);
+  }
+
+  @GetMapping("/worker/{workerId}/dashboard")
+  @Operation(
+      summary = "Get worker dashboard data",
+      description = "Retrieves pending inspections and active rentals for a worker"
+  )
+  public ResponseEntity<WorkerDashboardResponse> getWorkerDashboard(
+      @Parameter(description = "ID of the worker") 
+      @PathVariable String workerId
+  ) {
+      WorkerDashboardResponse response = bookingService.getWorkerDashboard(workerId);
+      return ResponseEntity.ok(response);
   }
 }
