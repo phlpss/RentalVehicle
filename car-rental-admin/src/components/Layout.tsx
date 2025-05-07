@@ -47,7 +47,6 @@ const Layout = ({ user, onLogout, onUserChange }: LayoutProps) => {
         </nav>
         <div className="user-menu">
           {user && onUserChange && <UserSwitcher currentUser={user} onUserChange={onUserChange} />}
-          <button className="logout-button" onClick={onLogout}>Logout</button>
         </div>
       </header>
       

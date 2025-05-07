@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getWorkerDashboard } from '../services/api';
 import { RentalInspection } from '../types/WorkerTypes';
+import { useUser } from '../App';
 import './CarInspections.css';
 
 const CarInspections = () => {
@@ -9,8 +10,9 @@ const CarInspections = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  // Hardcoded worker ID - in a real app, this would come from authentication
-  const workerId = "1";
+  // Get the current user from context
+  const { user } = useUser();
+  const workerId = user.id;
   const navigate = useNavigate();
   
   useEffect(() => {
