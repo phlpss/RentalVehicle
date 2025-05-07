@@ -4,6 +4,7 @@ import db.com.rentalvehicle.dto.BookingRequest;
 import db.com.rentalvehicle.dto.BookingResponse;
 import db.com.rentalvehicle.dto.ReturnInspectionRequest;
 import db.com.rentalvehicle.dto.ReturnInspectionResponse;
+import db.com.rentalvehicle.dto.UserBookingResponse;
 import db.com.rentalvehicle.model.Car;
 import db.com.rentalvehicle.model.Client;
 import db.com.rentalvehicle.model.Rental;
@@ -21,6 +22,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -105,5 +108,24 @@ public class BookingServiceImpl implements BookingService {
   public ReturnInspectionResponse finishBooking(String bookingId, ReturnInspectionRequest request) {
     // This will be implemented later
     return null;
+  }
+
+  @Override
+  public List<UserBookingResponse> getUserBookings(String userId) {
+    Client client = clientRepository.findById(userId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    
+    return client.getRentals().stream()
+        .map(rental -> {
+            UserBookingResponse response = new UserBookingResponse();
+            response.setId(rental.getId());
+            response.setStart(rental.getRentalStart());
+            response.setEnd(rental.getRentalEnd());
+            response.setCarBrand(rental.getCar().getBrand());
+            response.setModel(rental.getCar().getModel());
+            response.setLocation(rental.getCar().getOffice().getAddress());
+            return response;
+        })
+        .collect(Collectors.toList());
   }
 }
