@@ -5,7 +5,7 @@ CONTAINER_NAME="my_postgres"
 POSTGRES_PASSWORD="rental"
 POSTGRES_USER="rental"
 POSTGRES_DB="rental"
-PORT=5432
+PORT=5433
 
 # Check if container already exists
 if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
