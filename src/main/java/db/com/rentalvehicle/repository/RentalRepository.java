@@ -26,4 +26,13 @@ public interface RentalRepository extends JpaRepository<Rental, String> {
     Collection<Rental> findByStatusInAndWorkerId(List<RentalStatus> list, String workerId);
 
     Collection<Rental> findByStatusAndWorkerId(RentalStatus rentalStatus, String workerId);
+
+    @Query("SELECT r FROM Rental r WHERE r.status = 'INSPECTED' " +
+           "AND ((r.rentalStart >= :start AND r.rentalStart <= :end) " +
+           "OR (r.rentalEnd >= :start AND r.rentalEnd <= :end) " +
+           "OR (r.rentalStart <= :start AND r.rentalEnd >= :end))")
+    List<Rental> findCompletedRentalsInDateRange(
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end);
+
 }

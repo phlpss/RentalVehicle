@@ -37,43 +37,4 @@ public class ReportController {
         RevenueReportDTO report = reportService.generateRevenueReport(startDate, endDate);
         return ResponseEntity.ok(report);
     }
-
-    @Operation(
-        summary = "Generate rental activity report",
-        description = "Generates a report on rental activity for a specified date range"
-    )
-    @PostMapping("/rental-activity")
-    public ResponseEntity<ReportResponse> getRentalActivityReport(
-        @Parameter(description = "Filter criteria for the report") 
-        @RequestBody ReportFilter filter
-    ) {
-        ReportResponse report = reportService.getRentalActivityReport(filter);
-        return ResponseEntity.ok(report);
-    }
-
-    @Operation(
-        summary = "Generate fleet condition report",
-        description = "Generates a report on the condition of the fleet as of a specific date"
-    )
-    @GetMapping("/fleet-condition")
-    public ResponseEntity<ReportResponse> getFleetConditionReport(
-        @Parameter(description = "The date for which to generate the report") 
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate asOfDate
-    ) {
-        ReportResponse report = reportService.getFleetConditionReport(asOfDate);
-        return ResponseEntity.ok(report);
-    }
-
-    @Operation(
-        summary = "Generate financial report",
-        description = "Generates a financial report for a specified date range"
-    )
-    @PostMapping("/financial")
-    public ResponseEntity<ReportResponse> getFinancialReport(
-        @Parameter(description = "Filter criteria for the report") 
-        @RequestBody ReportFilter filter
-    ) {
-        ReportResponse report = reportService.getFinancialReport(filter);
-        return ResponseEntity.ok(report);
-    }
-} 
+}

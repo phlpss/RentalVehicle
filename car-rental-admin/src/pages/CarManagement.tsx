@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '../App';
-import { getOffices, getCarsByOffice, addCar } from '../services/api';
+import { getOffices, getCarsByOffice, addCar, updateCarStatus } from '../services/api';
 import { Car } from '../types';
 import './CarManagement.css';
 
@@ -40,6 +40,11 @@ const CarManagement = () => {
     dailyRentalCost: 0,
     officeId: ''
   });
+  
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [newStatus, setNewStatus] = useState<string>('');
+  const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
   
   useEffect(() => {
     fetchOffices();
@@ -139,6 +144,36 @@ const CarManagement = () => {
     } finally {
       setLoading(false);
     }
+  };
+  
+  const handleStatusChange = async () => {
+    if (!selectedCar || !newStatus) return;
+    
+    try {
+      setStatusUpdateLoading(true);
+      await updateCarStatus(selectedCar.id, newStatus);
+      
+      // Refresh the car list to show updated status
+      fetchCars();
+      setShowStatusModal(false);
+      setSelectedCar(null);
+    } catch (err) {
+      setError('Failed to update car status. Please try again.');
+      console.error('Error updating car status:', err);
+    } finally {
+      setStatusUpdateLoading(false);
+    }
+  };
+  
+  const openStatusModal = (car: Car) => {
+    setSelectedCar(car);
+    setNewStatus(car.status);
+    setShowStatusModal(true);
+  };
+  
+  const closeStatusModal = () => {
+    setShowStatusModal(false);
+    setSelectedCar(null);
   };
   
   const getOfficeNameById = (id: string) => {
@@ -400,6 +435,7 @@ const CarManagement = () => {
                     <th>Seats</th>
                     <th>Daily Cost</th>
                     <th>Office</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -410,13 +446,21 @@ const CarManagement = () => {
                       <td>{car.year}</td>
                       <td>{car.licensePlateNum}</td>
                       <td>
-                        <span className={`status-badge status-${car.status.toLowerCase()}`}>
+                        <span className={`status-badge status-${car.status?.toLowerCase()}`}>
                           {car.status}
                         </span>
                       </td>
                       <td>{car.seatsNumber}</td>
                       <td>${car.dailyRentalCost.toFixed(2)}</td>
                       <td>{getOfficeNameById(car.officeId)}</td>
+                      <td>
+                        <button 
+                          className="button action-button"
+                          onClick={() => openStatusModal(car)}
+                        >
+                          Update Status
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -424,6 +468,52 @@ const CarManagement = () => {
             </div>
           )}
         </>
+      )}
+      
+      {/* Status Update Modal */}
+      {showStatusModal && selectedCar && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Update Car Status</h2>
+            <p>
+              <strong>Car:</strong> {selectedCar.brand} {selectedCar.model} ({selectedCar.licensePlateNum})
+            </p>
+            <p>
+              <strong>Current Status:</strong> {selectedCar.status}
+            </p>
+            
+            <div className="form-group">
+              <label htmlFor="newStatus">New Status</label>
+              <select 
+                id="newStatus" 
+                value={newStatus} 
+                onChange={(e) => setNewStatus(e.target.value)}
+                disabled={statusUpdateLoading}
+              >
+                <option value="AVAILABLE">AVAILABLE</option>
+                <option value="NEEDS_REPAIR">NEEDS_REPAIR</option>
+                <option value="IN_REPAIR">IN_REPAIR</option>
+              </select>
+            </div>
+            
+            <div className="modal-actions">
+              <button 
+                className="button cancel-button"
+                onClick={closeStatusModal}
+                disabled={statusUpdateLoading}
+              >
+                Cancel
+              </button>
+              <button 
+                className="button submit-button"
+                onClick={handleStatusChange}
+                disabled={statusUpdateLoading || newStatus === selectedCar.status}
+              >
+                {statusUpdateLoading ? 'Updating...' : 'Update Status'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

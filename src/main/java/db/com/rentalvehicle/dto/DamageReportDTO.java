@@ -13,4 +13,4 @@ public class DamageReportDTO {
     private String description;
     private Double estimatedRepairCost;
     private String inspectionId;
-} 
+}

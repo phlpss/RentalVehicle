@@ -124,4 +124,17 @@ public class CarController {
     Car savedCar = carService.addCar(carCreateDTO);
     return ResponseEntity.ok(entityMapper.toCarDTO(savedCar));
   }
+
+  @Operation(
+          summary = "Update car status",
+          description = "Updates the status of a car (AVAILABLE, NEEDS_REPAIR, IN_REPAIR)"
+  )
+  @PutMapping("/{carId}/status")
+  public ResponseEntity<CarDTO> updateCarStatus(
+          @Parameter(description = "ID of the car to update") @PathVariable String carId,
+          @Parameter(description = "New status") @RequestParam String status
+  ) {
+    Car updatedCar = carService.updateCarStatus(carId, status);
+    return ResponseEntity.ok(entityMapper.toCarDTO(updatedCar));
+  }
 }

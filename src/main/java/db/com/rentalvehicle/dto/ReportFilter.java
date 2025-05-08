@@ -1,14 +1,16 @@
 package db.com.rentalvehicle.dto;
 
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class ReportFilter {
-
-  private LocalDate from;
-  private LocalDate to;
-  private String category;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String officeId;
 }

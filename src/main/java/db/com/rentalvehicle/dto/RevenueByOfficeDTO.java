@@ -15,4 +15,4 @@ public class RevenueByOfficeDTO {
     private Integer daysRented;
     private Integer carsRented;
     private Double avgDaysPerCar;
-} 
+}

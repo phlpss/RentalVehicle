@@ -24,4 +24,3 @@ public class RevenueReportDTO {
     private List<RevenueByOfficeDTO> revenueByOffice;
     private List<RevenueByModelDTO> revenueByModel;
 }
-

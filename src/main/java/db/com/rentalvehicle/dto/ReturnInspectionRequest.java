@@ -2,9 +2,13 @@ package db.com.rentalvehicle.dto;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReturnInspectionRequest {
 
   @NotNull
@@ -13,5 +17,15 @@ public class ReturnInspectionRequest {
   private double damagePenalty;
   private double cleaningFee;
   private String notes;
-  private List<String> damageReportIds;
+  private String status; // OK, NEEDS_REPAIR, FINED
+  private List<DamageReportDto> damageReports;
+  
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class DamageReportDto {
+    private String partAffected;
+    private String description;
+    private Double estimatedRepairCost;
+  }
 }

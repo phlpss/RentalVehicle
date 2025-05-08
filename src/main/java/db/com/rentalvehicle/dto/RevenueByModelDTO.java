@@ -14,4 +14,4 @@ public class RevenueByModelDTO {
     private Integer daysRented;
     private Integer carsRented;
     private Double avgDaysPerCar;
-} 
+}

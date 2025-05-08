@@ -103,15 +103,6 @@ public class CarService {
         return new AvailableDatesResponse(carId, availableDates, earliestAvailable, latestAvailable);
     }
 
-    public void updateStatus(String carId, String status) {
-        Optional<Car> carOpt = carRepository.findById(carId);
-        if (carOpt.isPresent()) {
-            Car car = carOpt.get();
-            car.setStatus(status);
-            carRepository.save(car);
-        }
-    }
-
     public CarSearchSelectors getSearchSelectors() {
         List<Car> cars = carRepository.findAll();
         
@@ -252,5 +243,25 @@ public class CarService {
         }
         
         return carRepository.save(car);
+    }
+
+    public Car updateCarStatus(String carId, String status) {
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
+        
+        // Validate status is one of the allowed values
+        if (!isValidStatus(status)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, 
+                    "Invalid status. Allowed values are: AVAILABLE, NEEDS_REPAIR, IN_REPAIR");
+        }
+        
+        car.setStatus(status);
+        return carRepository.save(car);
+    }
+    
+    private boolean isValidStatus(String status) {
+        return "AVAILABLE".equals(status) || 
+               "NEEDS_REPAIR".equals(status) || 
+               "IN_REPAIR".equals(status);
     }
 }

@@ -14,7 +14,6 @@ import db.com.rentalvehicle.repository.DamageReportRepository;
 import db.com.rentalvehicle.repository.RentalRepository;
 import db.com.rentalvehicle.repository.ReturnInspectionRepository;
 import db.com.rentalvehicle.repository.WorkerRepository;
-import db.com.rentalvehicle.service.ReturnInspectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ReturnInspectionServiceImpl implements ReturnInspectionService {
+public class ReturnInspectionServiceImpl  {
 
     private final ReturnInspectionRepository returnInspectionRepository;
     private final RentalRepository rentalRepository;
@@ -35,7 +34,6 @@ public class ReturnInspectionServiceImpl implements ReturnInspectionService {
     private final DamageReportRepository damageReportRepository;
     private final CarRepository carRepository;
 
-    @Override
     @Transactional
     public ReturnInspectionResponse submitInspection(String rentalId, ReturnInspectionRequest request) {
         Rental rental = rentalRepository.findById(rentalId)
@@ -115,12 +113,10 @@ public class ReturnInspectionServiceImpl implements ReturnInspectionService {
         return new ReturnInspectionResponse(
                 savedInspection.getId(),
                 savedInspection.getStatus().name(),
-                rental.getId(),
-                "Inspection submitted successfully");
+                savedInspection.getDamagePenalty() + savedInspection.getCleaningFee());
     }
 
-    @Override
     public List<ReturnInspection> getCompletedInspections(String workerId) {
         return returnInspectionRepository.findByInspectedById(workerId);
     }
-} 
+}

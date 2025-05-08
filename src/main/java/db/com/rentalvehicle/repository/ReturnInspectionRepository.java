@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ReturnInspectionRepository extends JpaRepository<ReturnInspection, String> {
     List<ReturnInspection> findByInspectedBy(Worker worker);
     Optional<ReturnInspection> findByRental(Rental rental);
+    List<ReturnInspection> findByInspectedById(String workerId);
 }
