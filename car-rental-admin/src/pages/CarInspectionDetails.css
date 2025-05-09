@@ -84,8 +84,17 @@
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
+  background-color: white;
+  color: #2c3e50;
   border-radius: 4px;
   font-size: 1rem;
+}
+
+
+.form-group input[type="date"] {
+  background-color: white;
+  color: #2c3e50;
+
 }
 
 .form-group input[type="range"] {
